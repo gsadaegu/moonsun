@@ -1,0 +1,2292 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>당신의 음기는 몇 개? — 새벽 달빛 & 현대 명리 아카이브</title>
+
+  <!-- Typography: Pretendard (jsDelivr) & Noto Serif KR (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            serif: ['"Noto Serif KR"', 'Georgia', 'serif'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* =========================================================================
+       EDITORIAL THEME TOKENS: DALBIT DARK (DEFAULT) & HANJI LIGHT
+       ========================================================================= */
+    :root,
+    [data-theme="dark"] {
+      --bg-base: #0B0D12;
+      --bg-elevated: rgba(18, 21, 31, 0.76);
+      --bg-subtle: rgba(255, 255, 255, 0.035);
+      --bg-subtle-hover: rgba(255, 255, 255, 0.065);
+      --bg-control: #121520;
+      --bg-pill-track: rgba(0, 0, 0, 0.42);
+      --border-hairline: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --text-primary: #F5F6FA;
+      --text-secondary: #B4B9CC;
+      --text-muted: #767D94;
+      --yin-primary: #93A5FD;
+      --yin-deep: #6366F1;
+      --yin-surface: rgba(99, 102, 241, 0.14);
+      --yin-border: rgba(147, 165, 253, 0.34);
+      --yang-primary: #FBBF24;
+      --yang-deep: #D97706;
+      --yang-surface: rgba(217, 119, 6, 0.14);
+      --yang-border: rgba(251, 191, 36, 0.34);
+      --card-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      --glow-lunar: rgba(99, 102, 241, 0.18);
+      --glow-solar: rgba(217, 119, 6, 0.11);
+      --grain-opacity: 0.032;
+      --select-arrow: "%2394a3b8";
+    }
+
+    [data-theme="light"] {
+      --bg-base: #F8F6F1;
+      --bg-elevated: rgba(255, 254, 250, 0.86);
+      --bg-subtle: rgba(24, 24, 27, 0.032);
+      --bg-subtle-hover: rgba(24, 24, 27, 0.062);
+      --bg-control: #FFFFFF;
+      --bg-pill-track: rgba(24, 24, 27, 0.055);
+      --border-hairline: rgba(24, 24, 27, 0.09);
+      --border-strong: rgba(24, 24, 27, 0.18);
+      --text-primary: #18181B;
+      --text-secondary: #4B5563;
+      --text-muted: #71717A;
+      --yin-primary: #4F46E5;
+      --yin-deep: #4338CA;
+      --yin-surface: rgba(79, 70, 229, 0.09);
+      --yin-border: rgba(79, 70, 229, 0.28);
+      --yang-primary: #D97706;
+      --yang-deep: #B45309;
+      --yang-surface: rgba(217, 119, 6, 0.10);
+      --yang-border: rgba(217, 119, 6, 0.28);
+      --card-shadow: 0 18px 46px rgba(24, 24, 27, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      --glow-lunar: rgba(99, 102, 241, 0.09);
+      --glow-solar: rgba(217, 119, 6, 0.08);
+      --grain-opacity: 0.025;
+      --select-arrow: "%2352525b";
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+      transition: background-color 0.35s ease, color 0.35s ease;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Editorial Backdrop */
+    .editorial-backdrop {
+      background:
+        radial-gradient(circle at 16% 8%, var(--glow-lunar) 0%, transparent 45%),
+        radial-gradient(circle at 86% 16%, var(--glow-lunar) 0%, transparent 40%),
+        radial-gradient(circle at 50% 94%, var(--glow-solar) 0%, transparent 48%),
+        var(--bg-base);
+    }
+
+    /* Fine Editorial Paper/Film Grain Overlay */
+    .grain-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: var(--grain-opacity);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Glass Archive Card */
+    .archive-card {
+      background: var(--bg-elevated);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid var(--border-hairline);
+      box-shadow: var(--card-shadow);
+      transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .subtle-box {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-hairline);
+      transition: background-color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .subtle-box-interactive:hover {
+      background: var(--bg-subtle-hover);
+      border-color: var(--border-strong);
+    }
+
+    /* Luminous Yin & Yang Celestial Orbs */
+    .orb-yin {
+      background: radial-gradient(circle at 30% 28%, #EEF2FF 0%, #93A5FD 46%, #6366F1 84%, #3730A3 100%);
+      box-shadow:
+        0 0 14px rgba(147, 165, 253, 0.55),
+        0 0 26px rgba(99, 102, 241, 0.28),
+        inset 0 -2px 5px rgba(30, 27, 75, 0.55);
+    }
+
+    .orb-yang {
+      background: radial-gradient(circle at 30% 28%, #FEF9C3 0%, #FBBF24 46%, #D97706 84%, #92400E 100%);
+      box-shadow:
+        0 0 14px rgba(251, 191, 36, 0.52),
+        0 0 26px rgba(217, 119, 6, 0.25),
+        inset 0 -2px 5px rgba(120, 53, 15, 0.5);
+    }
+
+    .orb-empty {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-hairline);
+    }
+
+    /* Tactile Shimmer Button */
+    .btn-shimmer {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(125deg, #4F46E5 0%, #6366F1 48%, #B45309 100%);
+      box-shadow: 0 12px 30px rgba(99, 102, 241, 0.32);
+    }
+    .btn-shimmer::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 75%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.24), transparent);
+      transform: skewX(-20deg);
+      animation: shimmerSweep 3.8s infinite ease-in-out;
+    }
+
+    @keyframes shimmerSweep {
+      0%, 55% { left: -120%; }
+      100% { left: 160%; }
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes orbScaleIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      72% { transform: scale(1.14); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .animate-fade-up {
+      animation: fadeSlideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .animate-orb-in {
+      animation: orbScaleIn 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Custom Editorial Select */
+    select.editorial-select {
+      appearance: none;
+      background-color: var(--bg-control);
+      color: var(--text-primary);
+      border: 1px solid var(--border-hairline);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.8' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 0.95rem;
+      padding-right: 2.1rem;
+      transition: border-color 0.2s ease, background-color 0.35s ease, color 0.35s ease;
+    }
+
+    select.editorial-select:focus {
+      outline: none;
+      border-color: var(--yin-primary);
+    }
+
+    /* Custom Toggle Switch */
+    .toggle-track {
+      width: 38px;
+      height: 22px;
+      border-radius: 999px;
+      background: var(--bg-pill-track);
+      border: 1px solid var(--border-strong);
+      position: relative;
+      transition: background-color 0.25s ease, border-color 0.25s ease;
+    }
+    .toggle-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: var(--text-muted);
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.25s ease;
+    }
+    input:checked + .toggle-track {
+      background: var(--yin-deep);
+      border-color: var(--yin-primary);
+    }
+    input:checked + .toggle-track .toggle-thumb {
+      transform: translateX(16px);
+      background: #FFFFFF;
+    }
+  </style>
+</head>
+<body class="editorial-backdrop">
+  <!-- Subtle Starlight Canvas & Paper Grain -->
+  <canvas id="ambient-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0"></canvas>
+  <div class="grain-overlay"></div>
+
+  <!-- Main Editorial Shell -->
+  <div class="relative z-10 w-full max-w-[640px] min-h-screen mx-auto px-4 sm:px-6 py-4 sm:py-6 flex flex-col justify-between">
+
+    <!-- ==================== TOP EDITORIAL NAVIGATION BAR ==================== -->
+    <header id="top-nav-bar" class="sticky top-2 z-30 flex items-center justify-between gap-2 px-3.5 py-2.5 mb-5 rounded-2xl archive-card">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <button id="btn-back-to-input" type="button"
+          class="hidden items-center gap-1.5 px-3 py-1.5 rounded-xl subtle-box subtle-box-interactive text-xs font-semibold cursor-pointer"
+          style="color: var(--text-primary);">
+          <span>←</span>
+          <span>다시 입력하기</span>
+        </button>
+
+        <div id="brand-badge-group" class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-full flex items-center justify-center border"
+               style="background: var(--yin-surface); border-color: var(--yin-border);">
+            <span class="font-serif text-[11px] font-bold tracking-tight" style="color: var(--yin-primary);">陰陽</span>
+          </div>
+          <div>
+            <span class="block text-[10px] tracking-[0.18em] uppercase font-semibold" style="color: var(--text-muted);">
+              MYEONGRI ARCHIVE
+            </span>
+            <span class="block text-xs font-bold tracking-tight" style="color: var(--text-primary);">
+              새벽 달빛 & 현대 명리
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button id="btn-sound-toggle" type="button" aria-label="효과음 전환"
+          class="w-8 h-8 rounded-xl subtle-box subtle-box-interactive flex items-center justify-center text-xs cursor-pointer"
+          title="효과음 켜기/끄기">
+          <span id="sound-icon">🔊</span>
+        </button>
+
+        <button id="btn-theme-toggle" type="button" aria-label="테마 전환"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl subtle-box subtle-box-interactive text-xs font-semibold cursor-pointer"
+          style="color: var(--text-primary);">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-label">달빛 다크</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ==================== MAIN CONTENT AREA ==================== -->
+    <main class="flex-1 flex flex-col justify-center">
+
+      <!-- ==================== VIEW 1: MAGAZINE-GRADE INPUT VIEW ==================== -->
+      <section id="view-input" class="animate-fade-up">
+        <!-- Editorial Masthead -->
+        <div class="text-center mb-6 px-2">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border text-[11px] font-semibold tracking-wide mb-3.5"
+               style="background: var(--yin-surface); border-color: var(--yin-border); color: var(--yin-primary);">
+            <span class="w-1.5 h-1.5 rounded-full" style="background: var(--yin-primary);"></span>
+            <span>2026 병오년 만세력 기반</span>
+          </div>
+
+          <h1 class="font-serif text-[32px] sm:text-[40px] font-black tracking-tight leading-[1.18] mb-2.5"
+              style="color: var(--text-primary);">
+            당신의 <span style="color: var(--yin-primary);">음기</span>는 몇 개?
+          </h1>
+
+          <p class="text-xs sm:text-sm font-medium leading-relaxed" style="color: var(--text-secondary);">
+            실제 사주 10글자의 음양 비율과 나와 결이 같은 연예인을 확인하세요.
+          </p>
+        </div>
+
+        <!-- Single Sleek Glass Card -->
+        <div class="archive-card rounded-[28px] p-6 sm:p-8 relative overflow-hidden">
+          <form id="saju-form" class="space-y-5" onsubmit="return false;">
+
+            <!-- Row 1: Gender & Calendar Type -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Gender Segmented Pill Control -->
+              <div>
+                <label class="block text-[11px] font-bold tracking-wider uppercase mb-2" style="color: var(--text-muted);">
+                  성별 <span class="font-normal normal-case">(대운·연예인 매칭 기준)</span>
+                </label>
+                <div class="grid grid-cols-2 gap-1 p-1 rounded-2xl border"
+                     style="background: var(--bg-pill-track); border-color: var(--border-hairline);">
+                  <button type="button" data-gender="female"
+                    class="gender-pill py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer">
+                    여성
+                  </button>
+                  <button type="button" data-gender="male"
+                    class="gender-pill py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer">
+                    남성
+                  </button>
+                </div>
+              </div>
+
+              <!-- Calendar Standard Segmented Pill Control -->
+              <div>
+                <label class="block text-[11px] font-bold tracking-wider uppercase mb-2" style="color: var(--text-muted);">
+                  달력 기준
+                </label>
+                <div class="grid grid-cols-3 gap-1 p-1 rounded-2xl border"
+                     style="background: var(--bg-pill-track); border-color: var(--border-hairline);">
+                  <button type="button" data-cal="solar"
+                    class="cal-pill py-2.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all cursor-pointer">
+                    양력
+                  </button>
+                  <button type="button" data-cal="lunar"
+                    class="cal-pill py-2.5 rounded-xl text-[11px] sm:text-xs font-semibold transition-all cursor-pointer">
+                    음력 평달
+                  </button>
+                  <button type="button" data-cal="lunar_leap"
+                    class="cal-pill py-2.5 rounded-xl text-[11px] sm:text-xs font-semibold transition-all cursor-pointer">
+                    음력 윤달
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Birth Date (Year 1950-2026, Month, Day) -->
+            <div>
+              <label class="block text-[11px] font-bold tracking-wider uppercase mb-2" style="color: var(--text-muted);">
+                생년월일
+              </label>
+              <div class="grid grid-cols-3 gap-2.5">
+                <select id="sel-year" aria-label="생년" class="editorial-select w-full px-3.5 py-3 rounded-2xl text-xs sm:text-sm font-semibold cursor-pointer"></select>
+                <select id="sel-month" aria-label="월" class="editorial-select w-full px-3.5 py-3 rounded-2xl text-xs sm:text-sm font-semibold cursor-pointer"></select>
+                <select id="sel-day" aria-label="일" class="editorial-select w-full px-3.5 py-3 rounded-2xl text-xs sm:text-sm font-semibold cursor-pointer"></select>
+              </div>
+            </div>
+
+            <!-- Row 3: Birth Time Selector + Unknown Time Toggle Switch -->
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <label for="sel-hour" class="text-[11px] font-bold tracking-wider uppercase" style="color: var(--text-muted);">
+                  태어난 시간 (12지신 시간대)
+                </label>
+
+                <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+                  <span class="text-xs font-semibold" style="color: var(--text-secondary);">태어난 시간 모름</span>
+                  <input id="chk-unknown-time" type="checkbox" class="sr-only" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                </label>
+              </div>
+
+              <select id="sel-hour" aria-label="태어난 시간" class="editorial-select w-full px-3.5 py-3 rounded-2xl text-xs sm:text-sm font-semibold cursor-pointer transition-opacity">
+                <option value="0">자시 (子時) · 23:30 ~ 01:29</option>
+                <option value="1">축시 (丑時) · 01:30 ~ 03:29</option>
+                <option value="2">인시 (寅時) · 03:30 ~ 05:29</option>
+                <option value="3">묘시 (卯時) · 05:30 ~ 07:29</option>
+                <option value="4">진시 (辰時) · 07:30 ~ 09:29</option>
+                <option value="5">사시 (巳時) · 09:30 ~ 11:29</option>
+                <option value="6" selected>오시 (午時) · 11:30 ~ 13:29</option>
+                <option value="7">미시 (未時) · 13:30 ~ 15:29</option>
+                <option value="8">신시 (申時) · 15:30 ~ 17:29</option>
+                <option value="9">유시 (酉時) · 17:30 ~ 19:29</option>
+                <option value="10">술시 (戌時) · 19:30 ~ 21:29</option>
+                <option value="11">해시 (亥時) · 21:30 ~ 23:29</option>
+              </select>
+
+              <p id="composition-caption" class="mt-2 text-[11px] leading-relaxed flex items-center gap-1.5" style="color: var(--text-muted);">
+                <span style="color: var(--yin-primary);">✦</span>
+                <span>구성 기준: <strong style="color: var(--text-secondary);">사주 8글자 + 2026 세운 2글자 = 총 10글자</strong></span>
+              </p>
+            </div>
+
+            <!-- Row 4: Optional Name / Nickname -->
+            <div>
+              <label for="inp-nickname" class="block text-[11px] font-bold tracking-wider uppercase mb-2" style="color: var(--text-muted);">
+                이름 · 닉네임 <span class="font-normal normal-case">(선택)</span>
+              </label>
+              <input id="inp-nickname" type="text" maxlength="12" placeholder="미입력 시 '당신'으로 표기됩니다"
+                class="w-full px-4 py-3 rounded-2xl border text-xs sm:text-sm font-medium focus:outline-none transition-colors"
+                style="background: var(--bg-control); color: var(--text-primary); border-color: var(--border-hairline);" />
+            </div>
+
+            <!-- Quick-Test Celebrity Preset Chips -->
+            <div class="pt-1">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold tracking-wider uppercase" style="color: var(--text-muted);">
+                  원클릭 아카이브 예시 (터치 즉시 계산)
+                </span>
+              </div>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <button type="button" data-preset="jennie"
+                  class="preset-chip py-2 px-2.5 rounded-xl subtle-box subtle-box-interactive text-[11px] font-semibold text-center cursor-pointer transition-all active:scale-95"
+                  style="color: var(--text-primary);">
+                  제니 (96.01.16)
+                </button>
+                <button type="button" data-preset="wonyoung"
+                  class="preset-chip py-2 px-2.5 rounded-xl subtle-box subtle-box-interactive text-[11px] font-semibold text-center cursor-pointer transition-all active:scale-95"
+                  style="color: var(--text-primary);">
+                  장원영 (04.08.31)
+                </button>
+                <button type="button" data-preset="eunwoo"
+                  class="preset-chip py-2 px-2.5 rounded-xl subtle-box subtle-box-interactive text-[11px] font-semibold text-center cursor-pointer transition-all active:scale-95"
+                  style="color: var(--text-primary);">
+                  차은우 (97.03.30)
+                </button>
+                <button type="button" data-preset="wooseok"
+                  class="preset-chip py-2 px-2.5 rounded-xl subtle-box subtle-box-interactive text-[11px] font-semibold text-center cursor-pointer transition-all active:scale-95"
+                  style="color: var(--text-primary);">
+                  변우석 (91.10.31)
+                </button>
+              </div>
+            </div>
+
+            <!-- Tactile Primary CTA Button -->
+            <div class="pt-1">
+              <button id="btn-submit-saju" type="submit"
+                class="btn-shimmer w-full py-4 px-6 rounded-2xl font-bold text-sm sm:text-base text-white tracking-tight hover:brightness-110 active:scale-[0.985] transition-all cursor-pointer">
+                내 음기 개수 확인하기 ✦
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ==================== VIEW 2: EDITORIAL RESULT VIEW ==================== -->
+      <section id="view-result" class="hidden space-y-5 animate-fade-up pb-6">
+
+        <!-- 1. HERO SCORE CARD -->
+        <article class="archive-card rounded-[28px] p-6 sm:p-8 relative overflow-hidden">
+          <!-- Ambient Corner Glow -->
+          <div id="hero-glow" class="absolute -top-28 left-1/2 -translate-x-1/2 w-80 h-80 rounded-full blur-3xl pointer-events-none"
+               style="background: var(--glow-lunar);"></div>
+
+          <div class="relative z-10">
+            <!-- Top Metadata Line -->
+            <div class="flex flex-wrap items-center justify-center gap-2 mb-4">
+              <span id="res-meta-line"
+                class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full subtle-box text-[11px] font-semibold"
+                style="color: var(--text-secondary);">
+                여성 · 양력 1996.01.16 · 일간 戊 · 무토
+              </span>
+            </div>
+
+            <!-- Expressive Editorial Score Display -->
+            <div class="text-center mb-5">
+              <p id="res-owner-caption" class="text-xs font-semibold tracking-wide mb-1" style="color: var(--text-muted);">
+                당신의 사주 명리 음양 스펙트럼
+              </p>
+
+              <div class="flex items-baseline justify-center gap-3 sm:gap-4 my-1">
+                <h2 class="font-serif text-[40px] sm:text-[50px] font-black tracking-tight leading-none" style="color: var(--text-primary);">
+                  음기 <span id="res-yin-num" style="color: var(--yin-primary);">6개</span>
+                </h2>
+                <span class="text-lg sm:text-xl font-light" style="color: var(--text-muted);">/</span>
+                <div class="font-serif text-xl sm:text-2xl font-bold" style="color: var(--yang-primary);">
+                  양기 <span id="res-yang-num">4개</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sleek Proportional Yin/Yang Balance Bar -->
+            <div class="max-w-[440px] mx-auto mb-5">
+              <div class="flex items-center justify-between text-[11px] font-bold mb-1.5 px-0.5">
+                <span style="color: var(--yin-primary);">🌙 음(陰) · <span id="res-yin-pct">60%</span></span>
+                <span style="color: var(--yang-primary);"><span id="res-yang-pct">40%</span> · 양(陽) ☀️</span>
+              </div>
+              <div class="h-2.5 w-full rounded-full overflow-hidden flex p-0.5 border"
+                   style="background: var(--bg-pill-track); border-color: var(--border-hairline);">
+                <div id="balance-bar-yin" class="h-full rounded-l-full transition-all duration-700"
+                     style="width: 60%; background: linear-gradient(90deg, #6366F1, #93A5FD);"></div>
+                <div id="balance-bar-yang" class="h-full rounded-r-full transition-all duration-700"
+                     style="width: 40%; background: linear-gradient(90deg, #FBBF24, #D97706);"></div>
+              </div>
+            </div>
+
+            <!-- 10-Slot Celestial Orb Grid -->
+            <div class="rounded-2xl subtle-box p-4 sm:p-5 mb-6">
+              <div id="celestial-orb-grid" class="grid grid-cols-10 gap-1.5 sm:gap-2.5 max-w-[420px] mx-auto items-center">
+                <!-- 10 animated Moon & Sun Orbs -->
+              </div>
+              <div class="flex items-center justify-between text-[10px] font-medium mt-2.5 px-1 max-w-[420px] mx-auto"
+                   style="color: var(--text-muted);">
+                <span>◀ 응축 · 몽환 · 흡입력</span>
+                <span>발산 · 생동 · 직진성 ▶</span>
+              </div>
+            </div>
+
+            <!-- Aura Title & Poetic 2-Line Summary -->
+            <div class="text-center max-w-[480px] mx-auto mb-6">
+              <div class="inline-block px-2.5 py-0.5 rounded-md text-[10px] font-bold tracking-widest uppercase mb-2"
+                   style="background: var(--yin-surface); color: var(--yin-primary); border: 1px solid var(--yin-border);">
+                AURA ARCHETYPE
+              </div>
+              <h3 id="res-aura-title" class="font-serif text-xl sm:text-2xl font-bold tracking-tight mb-2.5"
+                  style="color: var(--text-primary);">
+                새벽 안개를 머금은 흑진주 아우라
+              </h3>
+              <p id="res-poetic-summary" class="text-xs sm:text-[13px] leading-relaxed font-medium"
+                 style="color: var(--text-secondary);">
+                차분한 달빛의 깊이와 은은한 태양의 온기가 절묘하게 교차합니다.<br/>
+                말수가 적어도 공기의 밀도를 바꾸는 묘한 흡입력을 지닌 사주입니다.
+              </p>
+            </div>
+
+            <!-- 3 Clean Insight Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <div class="rounded-2xl subtle-box p-3.5 text-left">
+                <div class="flex items-center gap-1.5 mb-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full" style="background: var(--yin-primary);"></span>
+                  <span class="text-[11px] font-bold tracking-wide" style="color: var(--yin-primary);">타고난 분위기</span>
+                </div>
+                <p id="insight-vibe" class="text-xs leading-relaxed" style="color: var(--text-secondary);"></p>
+              </div>
+
+              <div class="rounded-2xl subtle-box p-3.5 text-left">
+                <div class="flex items-center gap-1.5 mb-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full" style="background: var(--yin-primary);"></span>
+                  <span class="text-[11px] font-bold tracking-wide" style="color: var(--yin-primary);">대인관계 매력</span>
+                </div>
+                <p id="insight-charm" class="text-xs leading-relaxed" style="color: var(--text-secondary);"></p>
+              </div>
+
+              <div class="rounded-2xl subtle-box p-3.5 text-left">
+                <div class="flex items-center gap-1.5 mb-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full" style="background: var(--yang-primary);"></span>
+                  <span class="text-[11px] font-bold tracking-wide" style="color: var(--yang-primary);">2026 병오년 기운 변화</span>
+                </div>
+                <p id="insight-2026" class="text-xs leading-relaxed" style="color: var(--text-secondary);"></p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2. SAME-YIN CELEBRITY MATCH CARD -->
+        <article class="archive-card rounded-[28px] p-6 sm:p-7">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div>
+              <span class="block text-[10px] font-bold tracking-[0.16em] uppercase mb-1" style="color: var(--yin-primary);">
+                CELEBRITY RESONANCE
+              </span>
+              <h3 id="celeb-heading" class="font-serif text-lg sm:text-xl font-bold tracking-tight" style="color: var(--text-primary);">
+                나와 음기 6개가 같은 연예인
+              </h3>
+            </div>
+
+            <!-- Integrated Segmented Tab (여자 연예인 / 남자 연예인) -->
+            <div class="inline-flex p-1 rounded-xl border self-start sm:self-auto shrink-0"
+                 style="background: var(--bg-pill-track); border-color: var(--border-hairline);">
+              <button type="button" data-celeb-tab="female"
+                class="celeb-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer">
+                여자 연예인
+              </button>
+              <button type="button" data-celeb-tab="male"
+                class="celeb-tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer">
+                남자 연예인
+              </button>
+            </div>
+          </div>
+
+          <p class="text-[11px] mb-4" style="color: var(--text-muted);">
+            동일한 2026 병오년 만세력 10글자 기준 · 카드를 클릭하면 나와 해당 연예인의 사주 10글자를 나란히 비교할 수 있습니다.
+          </p>
+
+          <!-- 2-Column (Mobile 1-Column) Celebrity Cards Grid -->
+          <div id="celeb-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <!-- Populated dynamically -->
+          </div>
+        </article>
+
+        <!-- 3. INTERACTIVE 10-CHARACTER SAJU PILLARS BREAKDOWN -->
+        <article class="archive-card rounded-[28px] p-6 sm:p-7">
+          <div class="flex items-center justify-between gap-2 mb-1.5">
+            <div>
+              <span class="block text-[10px] font-bold tracking-[0.16em] uppercase mb-1" style="color: var(--yin-primary);">
+                MANSERYEOK 10-CHARACTER CHART
+              </span>
+              <h3 class="font-serif text-lg sm:text-xl font-bold tracking-tight" style="color: var(--text-primary);">
+                만세력 10글자 구성표
+              </h3>
+            </div>
+            <span id="chart-mode-badge" class="px-2.5 py-1 rounded-full subtle-box text-[10px] font-semibold"
+                  style="color: var(--text-secondary);">
+              원국 8글자 + 2026 세운
+            </span>
+          </div>
+
+          <p class="text-[11px] mb-4" style="color: var(--text-muted);">
+            오른쪽(년주·2026 세운)에서 왼쪽(일주·시주)으로 읽습니다 · 글자 타일을 터치해 상세 풀이를 확인하세요.
+          </p>
+
+          <!-- 5-Pillar Visual Table: 시주/대운 · 일주 ★ · 월주 · 년주 · 2026 세운 -->
+          <div id="pillars-table" class="grid grid-cols-5 gap-1.5 sm:gap-2.5 text-center mb-4">
+            <!-- Populated dynamically -->
+          </div>
+
+          <!-- Sleek Character Detail Inspector -->
+          <div id="char-inspector" class="rounded-2xl p-4 border transition-all"
+               style="background: var(--bg-subtle); border-color: var(--yin-border);">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+              <div class="flex items-center gap-2">
+                <span id="insp-dot" class="w-2.5 h-2.5 rounded-full"></span>
+                <span id="insp-title" class="font-serif text-sm sm:text-base font-bold" style="color: var(--text-primary);">
+                  戊 (무 · 무토)
+                </span>
+                <span id="insp-polarity-pill" class="px-2 py-0.5 rounded-md text-[10px] font-bold">
+                  양 ☀️
+                </span>
+              </div>
+              <span id="insp-role" class="text-[11px] font-semibold" style="color: var(--text-muted);">
+                일주 (일간 · 나의 본질)
+              </span>
+            </div>
+            <p id="insp-desc" class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+              글자를 선택하면 오행의 성질과 사주 내 역할이 표시됩니다.
+            </p>
+          </div>
+        </article>
+
+        <!-- 4. BOTTOM SHARE & EXPORT BAR -->
+        <section class="archive-card rounded-[28px] p-5 sm:p-6 space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <button id="btn-export-png" type="button"
+              class="btn-shimmer py-3.5 px-4 rounded-2xl font-bold text-xs sm:text-sm text-white flex items-center justify-center gap-2 hover:brightness-110 active:scale-[0.985] transition-all cursor-pointer">
+              <span>🖼️</span>
+              <span>1080×1350 결과 카드 저장</span>
+            </button>
+
+            <div class="grid grid-cols-2 gap-2">
+              <button id="btn-toggle-card-preview" type="button"
+                class="py-3.5 px-3 rounded-2xl subtle-box subtle-box-interactive font-semibold text-xs flex items-center justify-center gap-1.5 active:scale-[0.985] transition-all cursor-pointer"
+                style="color: var(--text-primary);">
+                <span>👁️</span>
+                <span>카드 미리보기</span>
+              </button>
+
+              <button id="btn-copy-text" type="button"
+                class="py-3.5 px-3 rounded-2xl subtle-box subtle-box-interactive font-semibold text-xs flex items-center justify-center gap-1.5 active:scale-[0.985] transition-all cursor-pointer"
+                style="color: var(--text-primary);">
+                <span>📋</span>
+                <span>결과 텍스트 복사</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Inline Collapsible High-Res Card Preview Drawer -->
+          <div id="inline-card-preview-box" class="hidden pt-2 border-t" style="border-color: var(--border-hairline);">
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="text-[11px] font-bold" style="color: var(--text-secondary);">
+                1080×1350 아카이브 포토카드 미리보기 (길게 눌러 저장 가능)
+              </span>
+              <button id="btn-close-inline-preview" type="button" class="text-xs font-semibold px-2 py-0.5 rounded-lg subtle-box cursor-pointer" style="color: var(--text-muted);">
+                닫기 ✕
+              </button>
+            </div>
+            <div class="max-w-[340px] mx-auto rounded-2xl overflow-hidden border shadow-2xl" style="border-color: var(--border-strong);">
+              <img id="inline-preview-image" alt="사주 음기 아카이브 카드 미리보기" class="w-full h-auto block" />
+            </div>
+          </div>
+        </section>
+
+      </section>
+    </main>
+
+    <!-- Editorial Footer -->
+    <footer class="text-center py-4 text-[11px] tracking-wide" style="color: var(--text-muted);">
+      당신의 음기는 몇 개? · 새벽 달빛 & 현대 명리 아카이브
+    </footer>
+  </div>
+
+  <!-- ==================== CELEBRITY COMPARISON DRAWER / MODAL ==================== -->
+  <div id="celeb-compare-modal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="archive-card w-full max-w-[600px] rounded-t-[28px] sm:rounded-[28px] p-5 sm:p-7 max-h-[88vh] overflow-y-auto animate-fade-up">
+      <div class="flex items-start justify-between gap-3 pb-4 mb-4 border-b" style="border-color: var(--border-hairline);">
+        <div>
+          <span class="inline-block text-[10px] font-bold tracking-[0.16em] uppercase mb-1" style="color: var(--yin-primary);">
+            10-CHARACTER SAJU COMPARISON
+          </span>
+          <h4 id="cmp-modal-title" class="font-serif text-lg sm:text-xl font-bold" style="color: var(--text-primary);">
+            나 × 제니 사주 10글자 비교
+          </h4>
+          <p id="cmp-modal-subtitle" class="text-xs mt-0.5" style="color: var(--text-secondary);">
+            블랙핑크 · 가수 · 1996.01.16
+          </p>
+        </div>
+        <button id="btn-close-cmp-modal" type="button"
+          class="w-8 h-8 rounded-full subtle-box subtle-box-interactive flex items-center justify-center text-sm shrink-0 cursor-pointer"
+          style="color: var(--text-primary);">
+          ✕
+        </button>
+      </div>
+
+      <!-- Summary Badges Row -->
+      <div class="grid grid-cols-2 gap-2.5 mb-5">
+        <div class="rounded-2xl subtle-box p-3 text-center">
+          <span class="block text-[10px] font-bold uppercase mb-0.5" style="color: var(--text-muted);">나 (MY CHART)</span>
+          <span id="cmp-user-ratio" class="font-serif text-base font-bold" style="color: var(--yin-primary);">음기 6 : 양기 4</span>
+          <span id="cmp-user-dm" class="block text-[11px] mt-0.5" style="color: var(--text-secondary);">일간 戊 · 무토</span>
+        </div>
+
+        <div class="rounded-2xl subtle-box p-3 text-center">
+          <span id="cmp-celeb-label" class="block text-[10px] font-bold uppercase mb-0.5" style="color: var(--text-muted);">제니</span>
+          <span id="cmp-celeb-ratio" class="font-serif text-base font-bold" style="color: var(--yin-primary);">음기 6 : 양기 4</span>
+          <span id="cmp-celeb-dm" class="block text-[11px] mt-0.5" style="color: var(--text-secondary);">일간 丁 · 정화</span>
+        </div>
+      </div>
+
+      <!-- Side-by-Side 5-Pillar Comparison Table -->
+      <div class="space-y-3 mb-4">
+        <div>
+          <div class="flex items-center justify-between text-[11px] font-bold mb-1.5 px-1">
+            <span style="color: var(--text-primary);">내 사주 10글자</span>
+            <span style="color: var(--text-muted);">시주/대운 · 일주 ★ · 월주 · 년주 · 2026</span>
+          </div>
+          <div id="cmp-user-grid" class="grid grid-cols-5 gap-1.5 text-center"></div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between text-[11px] font-bold mb-1.5 px-1">
+            <span id="cmp-celeb-grid-title" style="color: var(--yin-primary);">제니 사주 10글자</span>
+            <span style="color: var(--text-muted);">현재대운 · 일주 ★ · 월주 · 년주 · 2026</span>
+          </div>
+          <div id="cmp-celeb-grid" class="grid grid-cols-5 gap-1.5 text-center"></div>
+        </div>
+      </div>
+
+      <!-- Synergy Note -->
+      <div class="rounded-2xl p-3.5 text-xs leading-relaxed border"
+           style="background: var(--yin-surface); border-color: var(--yin-border); color: var(--text-primary);">
+        <strong style="color: var(--yin-primary);">✦ 아우라 공명 포인트:</strong>
+        <span id="cmp-synergy-note">두 사람 모두 동일한 음양 비율을 지녀, 밖으로 발산하는 에너지와 안으로 끌어당기는 분위기의 균형이 닮아 있습니다.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Toast Notification -->
+  <div id="toast-container" class="pointer-events-none fixed bottom-6 left-1/2 -translate-x-1/2 z-50 opacity-0 translate-y-3 transition-all duration-300">
+    <div id="toast-text" class="px-4 py-2.5 rounded-full text-xs font-semibold shadow-2xl whitespace-nowrap border"
+         style="background: var(--bg-control); color: var(--text-primary); border-color: var(--border-strong);">
+      알림
+    </div>
+  </div>
+
+  <script>
+    /**
+     * =========================================================================
+     * 1. REAL KOREAN MANSERYEOK (만세력) ENGINE
+     *    - Full 1900–2049 Lunar-to-Solar Conversion (_lunarInfo)
+     *    - Accurate 24 Solar Terms (입춘 & 12 절기) for Year/Month Pillars
+     *    - Exact Day Pillar with 23:30 Korean 자시 Boundary
+     *    - Hour Pillar (시두법) & Daeun (대운) Calculation
+     * =========================================================================
+     */
+
+    const HEAVENLY_STEMS = [
+      { idx: 0, hangul: '갑', hanja: '甲', element: '목', elementFull: '목(木)', reading: '갑목', polarity: 'yang', color: '#10B981', desc: '하늘로 곧게 뻗는 거목처럼 존재감이 선명하고 당당한 개척자의 양기입니다.' },
+      { idx: 1, hangul: '을', hanja: '乙', element: '목', elementFull: '목(木)', reading: '을목', polarity: 'yin',  color: '#10B981', desc: '달빛 아래 피어난 유연한 덩굴처럼 사람의 마음을 은근히 끌어당기는 음기입니다.' },
+      { idx: 2, hangul: '병', hanja: '丙', element: '화', elementFull: '화(火)', reading: '병화', polarity: 'yang', color: '#F43F5E', desc: '정오의 눈부신 태양처럼 어디서든 시선을 집중시키는 압도적 발산의 양기입니다.' },
+      { idx: 3, hangul: '정', hanja: '丁', element: '화', elementFull: '화(火)', reading: '정화', polarity: 'yin',  color: '#F43F5E', desc: '고요한 밤을 밝히는 촛불과 별빛처럼 은은하지만 깊은 여운을 남기는 음기입니다.' },
+      { idx: 4, hangul: '무', hanja: '戊', element: '토', elementFull: '토(土)', reading: '무토', polarity: 'yang', color: '#F59E0B', desc: '거대한 태산처럼 흔들림 없는 카리스마와 묵직한 포용력을 품은 양기입니다.' },
+      { idx: 5, hangul: '기', hanja: '己', element: '토', elementFull: '토(土)', reading: '기토', polarity: 'yin',  color: '#F59E0B', desc: '모든 것을 조용히 품어 길러내는 비옥한 정원처럼 속을 알 수 없는 신비한 음기입니다.' },
+      { idx: 6, hangul: '경', hanja: '庚', element: '금', elementFull: '금(金)', reading: '경금', polarity: 'yang', color: '#94A3B8', desc: '서슬 퍼런 명검과 원석처럼 결단력이 빠르고 선명한 카리스마를 뿜는 양기입니다.' },
+      { idx: 7, hangul: '신', hanja: '辛', element: '금', elementFull: '금(金)', reading: '신금', polarity: 'yin',  color: '#94A3B8', desc: '차가운 달빛을 머금은 보석과 서리처럼 도도하고 서늘한 냉미녀·냉미남 음기입니다.' },
+      { idx: 8, hangul: '임', hanja: '壬', element: '수', elementFull: '수(水)', reading: '임수', polarity: 'yang', color: '#38BDF8', desc: '거침없이 흐르는 큰 바다처럼 스케일이 크고 지혜로우며 유동적인 양의 수기입니다.' },
+      { idx: 9, hangul: '계', hanja: '癸', element: '수', elementFull: '수(水)', reading: '계수', polarity: 'yin',  color: '#38BDF8', desc: '새벽안개와 촉촉한 밤비처럼 가장 몽환적이고 직관적이며 사람을 홀리는 깊은 음기입니다.' }
+    ];
+
+    const EARTHLY_BRANCHES = [
+      { idx: 0,  hangul: '자', hanja: '子', element: '수', elementFull: '수(水)', reading: '자수', polarity: 'yang', color: '#38BDF8', desc: '칠흑 같은 자정 속에 새 생명을 응축한 물처럼 총명하고 예리한 양기입니다.' },
+      { idx: 1,  hangul: '축', hanja: '丑', element: '토', elementFull: '토(土)', reading: '축토', polarity: 'yin',  color: '#F59E0B', desc: '겨울 새벽의 얼어붙은 대지처럼 차분한 인내심과 깊은 내공을 감춘 음기입니다.' },
+      { idx: 2,  hangul: '인', hanja: '寅', element: '목', elementFull: '목(木)', reading: '인목', polarity: 'yang', color: '#10B981', desc: '봄을 여는 새벽 호랑이처럼 역동적이고 진취적인 시작의 양기입니다.' },
+      { idx: 3,  hangul: '묘', hanja: '卯', element: '목', elementFull: '목(木)', reading: '묘목', polarity: 'yin',  color: '#10B981', desc: '달빛 정원의 푸른 풀잎처럼 섬세한 감수성과 도화(桃花)의 매력을 품은 음기입니다.' },
+      { idx: 4,  hangul: '진', hanja: '辰', element: '토', elementFull: '토(土)', reading: '진토', polarity: 'yang', color: '#F59E0B', desc: '비구름을 부르는 신비의 용처럼 스케일이 크고 비범한 아우라를 풍기는 양기입니다.' },
+      { idx: 5,  hangul: '사', hanja: '巳', element: '화', elementFull: '화(火)', reading: '사화', polarity: 'yin',  color: '#F43F5E', desc: '겉은 차분해 보이지만 속에 치명적인 열정과 통찰을 품은 매혹적인 음기입니다.' },
+      { idx: 6,  hangul: '오', hanja: '午', element: '화', elementFull: '화(火)', reading: '오화', polarity: 'yang', color: '#F43F5E', desc: '한낮의 질주하는 태양처럼 솔직하고 화려하게 빛나는 무대 체질의 양기입니다.' },
+      { idx: 7,  hangul: '미', hanja: '未', element: '토', elementFull: '토(土)', reading: '미토', polarity: 'yin',  color: '#F59E0B', desc: '여름 끝자락의 온화한 석양처럼 부드러우면서도 자기 세계가 확고한 음기입니다.' },
+      { idx: 8,  hangul: '신', hanja: '申', element: '금', elementFull: '금(金)', reading: '신금', polarity: 'yang', color: '#94A3B8', desc: '다재다능한 백금처럼 빠른 두뇌 회전과 세련된 감각을 드러내는 양기입니다.' },
+      { idx: 9,  hangul: '유', hanja: '酉', element: '금', elementFull: '금(金)', reading: '유금', polarity: 'yin',  color: '#94A3B8', desc: '서늘한 가을밤의 순은 달빛처럼 깔끔하고 도도한 연예인 아우라의 대표 음기입니다.' },
+      { idx: 10, hangul: '술', hanja: '戌', element: '토', elementFull: '토(土)', reading: '술토', polarity: 'yang', color: '#F59E0B', desc: '황혼을 지키는 고독한 성벽처럼 신의와 정신적 깊이가 남다른 양기입니다.' },
+      { idx: 11, hangul: '해', hanja: '亥', element: '수', elementFull: '수(水)', reading: '해수', polarity: 'yin',  color: '#38BDF8', desc: '깊고 고요한 밤바다의 심연처럼 사람들을 빠져들게 만드는 몽환적 음기입니다.' }
+    ];
+
+    // 1900–2049 Lunar Calendar Hex Bitmask Table (_lunarInfo)
+    const _lunarInfo = [
+      0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2, // 1900-1909
+      0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2, 0x095b0, 0x14977, // 1910-1919
+      0x04970, 0x0a4b0, 0x0b4b5, 0x06a50, 0x06d40, 0x1ab54, 0x02b60, 0x09570, 0x052f2, 0x04970, // 1920-1929
+      0x06566, 0x0d4a0, 0x0ea50, 0x06e95, 0x05ad0, 0x02b60, 0x186e3, 0x092e0, 0x1c8d7, 0x0c950, // 1930-1939
+      0x0d4a0, 0x1d8a6, 0x0b550, 0x056a0, 0x1a5b4, 0x025d0, 0x092d0, 0x0d2b2, 0x0a950, 0x0b557, // 1940-1949
+      0x06ca0, 0x0b550, 0x15355, 0x04da0, 0x0a5d0, 0x14573, 0x052d0, 0x0a9a8, 0x0e950, 0x06aa0, // 1950-1959
+      0x0aea6, 0x0ab50, 0x04b60, 0x0aae4, 0x0a570, 0x05260, 0x0f263, 0x0d950, 0x05b57, 0x056a0, // 1960-1969
+      0x096d0, 0x04dd5, 0x04ad0, 0x0a4d0, 0x0d4d4, 0x0d250, 0x0d558, 0x0b540, 0x0b5a0, 0x195a6, // 1970-1979
+      0x095b0, 0x049b0, 0x0a974, 0x0a4b0, 0x0b27a, 0x06a50, 0x06d40, 0x0af46, 0x0ab60, 0x09570, // 1980-1989
+      0x04af5, 0x04970, 0x064b0, 0x074a3, 0x0ea50, 0x06b58, 0x05ac0, 0x0ab60, 0x096d5, 0x092e0, // 1990-1999
+      0x0c960, 0x0d954, 0x0d4a0, 0x0da50, 0x07552, 0x056a0, 0x0abb7, 0x025d0, 0x092d0, 0x0cab5, // 2000-2009
+      0x0a950, 0x0b4a0, 0x0baa4, 0x0ad50, 0x055d9, 0x04ba0, 0x0a5b0, 0x15176, 0x052b0, 0x0a930, // 2010-2019
+      0x07954, 0x06aa0, 0x0ad50, 0x05b52, 0x04b60, 0x0a6e6, 0x0a4e0, 0x0d260, 0x0ea65, 0x0d530, // 2020-2029
+      0x05aa0, 0x076a3, 0x096d0, 0x04bd7, 0x04ad0, 0x0a4d0, 0x1d0b6, 0x0d250, 0x0d520, 0x0dd45, // 2030-2039
+      0x0b5a0, 0x056d0, 0x055b2, 0x049b0, 0x0a577, 0x0a4b0, 0x0aa50, 0x1b255, 0x06d20, 0x0ada0  // 2040-2049
+    ];
+
+    const ManseryeokEngine = {
+      leapMonth(y) {
+        if (y < 1900 || y > 2049) return 0;
+        return _lunarInfo[y - 1900] & 0xf;
+      },
+      leapDays(y) {
+        if (this.leapMonth(y)) return (_lunarInfo[y - 1900] & 0x10000) ? 30 : 29;
+        return 0;
+      },
+      monthDays(y, m) {
+        if (y < 1900 || y > 2049) return 30;
+        return (_lunarInfo[y - 1900] & (0x10000 >> m)) ? 30 : 29;
+      },
+      lYearDays(y) {
+        let sum = 348;
+        for (let i = 0x8000; i > 0x8; i >>= 1) {
+          sum += (_lunarInfo[y - 1900] & i) ? 1 : 0;
+        }
+        return sum + this.leapDays(y);
+      },
+      lunarToSolar(y, m, d, isLeap = false) {
+        if (y < 1900 || y > 2049) return { error: '1900년 ~ 2049년 사이의 날짜만 지원합니다.' };
+        const lm = this.leapMonth(y);
+        if (isLeap && lm !== m) {
+          const hint = lm > 0 ? `(해당 연도 윤달은 윤${lm}월입니다)` : '(해당 연도에는 윤달이 없습니다)';
+          return { error: `${y}년 음력 ${m}월은 윤달이 아닙니다. ${hint}` };
+        }
+        const maxD = isLeap ? this.leapDays(y) : this.monthDays(y, m);
+        if (d > maxD) {
+          return { error: `${y}년 음력 ${isLeap ? '윤' : ''}${m}월은 ${maxD}일까지 있습니다.` };
+        }
+
+        let offset = 0;
+        for (let i = 1900; i < y; i++) offset += this.lYearDays(i);
+        for (let i = 1; i < m; i++) {
+          offset += this.monthDays(y, i);
+          if (lm === i) offset += this.leapDays(y);
+        }
+        if (isLeap) offset += this.monthDays(y, m);
+        offset += d - 1;
+
+        const baseUtc = Date.UTC(1900, 0, 31); // Lunar 1900-01-01 == Solar 1900-01-31
+        const resDate = new Date(baseUtc + offset * 86400000);
+        return {
+          year: resDate.getUTCFullYear(),
+          month: resDate.getUTCMonth() + 1,
+          day: resDate.getUTCDate()
+        };
+      },
+
+      gregorianToJDN(year, month, day) {
+        const a = Math.floor((14 - month) / 12);
+        const y = year + 4800 - a;
+        const m = month + 12 * a - 3;
+        return day + Math.floor((153 * m + 2) / 5) + 365 * y +
+          Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+      },
+
+      kstToJD(year, month, day, hour = 12, minute = 0) {
+        const utcMs = Date.UTC(year, month - 1, day, hour - 9, minute, 0);
+        return utcMs / 86400000 + 2440587.5;
+      },
+
+      // Apparent Solar Ecliptic Longitude (degrees 0..360) for 24 Solar Terms
+      getSolarLongitude(jd) {
+        const T = (jd - 2451545.0) / 36525.0;
+        const L0 = (280.46646 + T * (36000.76983 + T * 0.0003032)) % 360;
+        const M = (357.52911 + T * (35999.05029 - 0.0001537 * T)) % 360;
+        const Mrad = (M * Math.PI) / 180;
+        const C = (1.914602 - T * (0.004817 + 0.000014 * T)) * Math.sin(Mrad)
+          + (0.019993 - 0.000101 * T) * Math.sin(2 * Mrad)
+          + 0.000289 * Math.sin(3 * Mrad);
+        const trueLong = L0 + C;
+        const omega = 125.04 - 1934.136 * T;
+        const apparent = trueLong - 0.00569 - 0.00478 * Math.sin((omega * Math.PI) / 180);
+        return ((apparent % 360) + 360) % 360;
+      },
+
+      findSolarTermJD(estimateJD, targetDeg) {
+        let jd = estimateJD;
+        for (let i = 0; i < 12; i++) {
+          const lon = this.getSolarLongitude(jd);
+          let diff = targetDeg - lon;
+          if (diff > 180) diff -= 360;
+          if (diff < -180) diff += 360;
+          if (Math.abs(diff) < 1e-6) break;
+          jd += diff / 0.985647;
+        }
+        return jd;
+      },
+
+      calculate({ nickname = '당신', gender = 'female', calType = 'solar', year, month, day, hourIndex = 6, unknownTime = false }) {
+        let solarY = year;
+        let solarM = month;
+        let solarD = day;
+
+        if (calType === 'lunar' || calType === 'lunar_leap') {
+          const conv = this.lunarToSolar(year, month, day, calType === 'lunar_leap');
+          if (conv.error) return { error: conv.error };
+          solarY = conv.year;
+          solarM = conv.month;
+          solarD = conv.day;
+        }
+
+        // KST representative time with Korean 23:30 자시 boundary awareness
+        let kstHour = 12;
+        let kstMin = 0;
+        if (!unknownTime) {
+          kstHour = hourIndex === 0 ? 0 : hourIndex * 2;
+          kstMin = 30;
+        }
+        const isLateJasi = !unknownTime && (kstHour === 23 && kstMin >= 30);
+
+        const birthJD = this.kstToJD(solarY, solarM, solarD, kstHour, kstMin);
+
+        // 1. 년주 (Year Pillar): 입춘 (315°) boundary
+        const ipchunEstJD = this.kstToJD(solarY, 2, 4, 12, 0);
+        const ipchunExactJD = this.findSolarTermJD(ipchunEstJD, 315);
+        const sajuYear = birthJD < ipchunExactJD ? solarY - 1 : solarY;
+
+        const yearStemIdx = ((sajuYear - 4) % 10 + 10) % 10;
+        const yearBranchIdx = ((sajuYear - 4) % 12 + 12) % 12;
+
+        // 2. 월주 (Month Pillar): 12 절기 + 월두법
+        const sunLon = this.getSolarLongitude(birthJD);
+        const shiftedLon = ((sunLon - 315) % 360 + 360) % 360;
+        const sajuMonthIdx = Math.floor(shiftedLon / 30); // 0=인월 .. 11=축월
+        const monthStemIdx = ((yearStemIdx % 5) * 2 + 2 + sajuMonthIdx) % 10;
+        const monthBranchIdx = (2 + sajuMonthIdx) % 12;
+
+        // 3. 일주 (Day Pillar): Exact JDN with 23:30 Korean 자시 rollover
+        const jdn = this.gregorianToJDN(solarY, solarM, solarD) + (isLateJasi ? 1 : 0);
+        const jdn2000 = this.gregorianToJDN(2000, 1, 1);
+        const dayCycle60 = ((54 + (jdn - jdn2000)) % 60 + 60) % 60;
+        const dayStemIdx = dayCycle60 % 10;
+        const dayBranchIdx = dayCycle60 % 12;
+
+        // 4. 현재 대운 (Current Daeun in 2026)
+        const isYangYear = yearStemIdx % 2 === 0;
+        const isForward = (isYangYear && gender === 'male') || (!isYangYear && gender === 'female');
+        const direction = isForward ? 1 : -1;
+
+        const currentTermDeg = (315 + sajuMonthIdx * 30) % 360;
+        const nextTermDeg = (315 + (sajuMonthIdx + 1) * 30) % 360;
+        const targetTermDeg = isForward ? nextTermDeg : currentTermDeg;
+        const degDiff = isForward
+          ? ((targetTermDeg - sunLon + 360) % 360)
+          : ((sunLon - targetTermDeg + 360) % 360);
+
+        const approxDays = (degDiff / 30) * 30.4375;
+        const daeunStartAge = Math.max(1, Math.round(approxDays / 3));
+        const age2026 = Math.max(1, 2026 - solarY + 1);
+        const daeunStep = age2026 < daeunStartAge ? 1 : Math.floor((age2026 - daeunStartAge) / 10) + 1;
+
+        const daeunStemIdx = ((monthStemIdx + direction * daeunStep) % 10 + 10) % 10;
+        const daeunBranchIdx = ((monthBranchIdx + direction * daeunStep) % 12 + 12) % 12;
+
+        const daeunPillar = {
+          key: 'daeun',
+          label: '현재 대운',
+          roleDesc: `${daeunStartAge}세 대운 (${isForward ? '순행' : '역행'}) · 현재 흐르는 10년 대운의 기운`,
+          stem: HEAVENLY_STEMS[daeunStemIdx],
+          branch: EARTHLY_BRANCHES[daeunBranchIdx]
+        };
+
+        const dayPillar = {
+          key: 'day',
+          label: '일주 ★',
+          roleDesc: '일주 (일간 · 나 자신의 핵심 본질과 고유 아우라)',
+          stem: HEAVENLY_STEMS[dayStemIdx],
+          branch: EARTHLY_BRANCHES[dayBranchIdx],
+          isSelf: true
+        };
+
+        const monthPillar = {
+          key: 'month',
+          label: '월주',
+          roleDesc: '월주 (사회적 무드 · 타인에게 비치는 첫인상과 환경)',
+          stem: HEAVENLY_STEMS[monthStemIdx],
+          branch: EARTHLY_BRANCHES[monthBranchIdx]
+        };
+
+        const yearPillar = {
+          key: 'year',
+          label: '년주',
+          roleDesc: '년주 (타고난 뿌리 · 초년 환경과 가문의 기운)',
+          stem: HEAVENLY_STEMS[yearStemIdx],
+          branch: EARTHLY_BRANCHES[yearBranchIdx]
+        };
+
+        const seun2026Pillar = {
+          key: 'year2026',
+          label: '2026 세운',
+          roleDesc: '2026 병오년(丙午年) 세운 · 올해 우주에서 들어오는 붉은 말의 화(火) 기운',
+          stem: HEAVENLY_STEMS[2], // 병(丙 · 양화)
+          branch: EARTHLY_BRANCHES[6] // 오(午 · 양화)
+        };
+
+        // Left-to-right column order: 시주/대운 · 일주 ★ · 월주 · 년주 · 2026 세운
+        let pillars = [];
+        if (!unknownTime) {
+          const hourBranchIdx = hourIndex;
+          const hourStemIdx = ((dayStemIdx % 5) * 2 + hourBranchIdx) % 10;
+          const hourPillar = {
+            key: 'hour',
+            label: '시주',
+            roleDesc: '시주 (내면의 잔향 · 말년과 은밀한 감수성의 자리)',
+            stem: HEAVENLY_STEMS[hourStemIdx],
+            branch: EARTHLY_BRANCHES[hourBranchIdx]
+          };
+          pillars = [hourPillar, dayPillar, monthPillar, yearPillar, seun2026Pillar];
+        } else {
+          pillars = [daeunPillar, dayPillar, monthPillar, yearPillar, seun2026Pillar];
+        }
+
+        let yinCount = 0;
+        pillars.forEach(p => {
+          if (p.stem.polarity === 'yin') yinCount += 1;
+          if (p.branch.polarity === 'yin') yinCount += 1;
+        });
+
+        return {
+          nickname: (nickname || '').trim() || '당신',
+          gender,
+          calType,
+          inputDateStr: `${year}.${String(month).padStart(2, '0')}.${String(day).padStart(2, '0')}`,
+          solarDateStr: `${solarY}.${String(solarM).padStart(2, '0')}.${String(solarD).padStart(2, '0')}`,
+          unknownTime,
+          dayMaster: dayPillar.stem,
+          pillars,
+          yinCount,
+          yangCount: 10 - yinCount
+        };
+      }
+    };
+
+    /**
+     * =========================================================================
+     * 2. EDITORIAL ARCHETYPES & 2026 BYEONG-O YEAR INSIGHTS (0–10 YIN)
+     * =========================================================================
+     */
+    const AURA_ARCHETYPES = {
+      0: {
+        title: '구름 한 점 없는 정오의 순양(純陽) 태양',
+        summary: '10글자 전부가 양(陽)으로 빛나는 극희귀 순수 발산형 사주입니다.\n어디서든 존재감이 선명하게 각인되는 압도적 주인공 아우라를 지녔습니다.',
+        vibe: '숨김없이 투명하고 에너제틱하며 공간의 채도를 단숨에 끌어올리는 선명한 분위기',
+        charm: '솔직한 직진 화법과 시원한 결단력으로 주변 사람들에게 활력을 불어넣는 매력',
+        year2026: '2026 병오년의 뜨거운 화(火) 기운이 더해져 무대 중앙에서 가장 눈부시게 빛나는 한 해입니다.'
+      },
+      1: {
+        title: '한낮의 하이틴 햇살 아우라',
+        summary: '아홉 개의 태양 구슬 속에 단 하나의 달빛이 섬세함을 더한 비율입니다.\n당당한 생명력과 의외의 세심함이 어우러져 누구에게나 호감을 얻습니다.',
+        vibe: '화사하고 생동감 넘치는 첫인상 속에 섬세한 눈치가 숨어 있는 입체적 분위기',
+        charm: '밝게 웃다가도 결정적인 순간 차분해지는 반전 포인트가 주는 설렘',
+        year2026: '강한 양기 흐름 속에서 유일한 음기 글자가 중심을 잡아주어 추진력과 디테일이 함께 빛납니다.'
+      },
+      2: {
+        title: '청량한 햇살 윤슬의 인간 비타민',
+        summary: '여덟 개의 양기와 두 개의 음기가 어우러진 맑고 청량한 에너지입니다.\n가볍지 않으면서도 주변 공기를 산뜻하게 환기하는 기분 좋은 아우라를 품었습니다.',
+        vibe: '맑은 오후의 강물 윤슬처럼 투명하고 싱그러우며 생기가 감도는 무드',
+        charm: '처음 만나는 사람도 금세 무장해제시키는 자연스러운 친화력과 온기',
+        year2026: '2026 병오년의 역동적인 불기운이 활동 반경을 넓혀 새로운 기회와 인연을 끌어당깁니다.'
+      },
+      3: {
+        title: '오후 4시 골든아워의 세련된 활력',
+        summary: '일곱 개의 햇살과 세 개의 달빛이 균형 있게 배치된 감각적 사주입니다.\n밝고 유연하게 소통하면서도 자기만의 단단한 내면 세계를 지켰습니다.',
+        vibe: '따사로운 늦오후의 빛처럼 부드럽고 세련되며 여운이 남는 분위기',
+        charm: '편안하게 다가갈 수 있으면서도 가볍지 않은 품격 있는 존재감',
+        year2026: '외부 활동과 표현력이 활발해지며 3개의 음기가 감각적인 완성도를 더해줍니다.'
+      },
+      4: {
+        title: '낮과 밤이 교차하는 매직아워 아우라',
+        summary: '여섯 개의 양기와 네 개의 음기가 조화를 이루는 입체적 매력의 소유자입니다.\n웃을 땐 화사한 햇살 같다가도 무표정일 땐 서늘한 서사가 피어납니다.',
+        vibe: '화사함과 차분함이 자연스럽게 공존하는 매직아워 하늘 같은 무드',
+        charm: '친해질수록 드러나는 의외의 진중함과 깊은 감수성이 만드는 반전 매력',
+        year2026: '올해 들어오는 병오년 양기가 잠재된 표현력을 깨워 대외적인 존재감이 한층 커집니다.'
+      },
+      5: {
+        title: '달빛과 태양이 공존하는 천의 얼굴',
+        summary: '음기 5개와 양기 5개가 완벽한 대칭을 이루는 카멜레온 비율입니다.\n상황에 따라 서늘한 냉미녀·냉미남과 따뜻한 온미녀·온미남 무드를 자유롭게 오갑니다.',
+        vibe: '차가운 달빛 결계와 따스한 햇살 온기를 동시에 품은 다층적 분위기',
+        charm: '볼 때마다 새로운 얼굴이 발견되어 질릴 틈이 없는 입체적 흡입력',
+        year2026: '음양 대칭 위에 2026 병오년의 화기가 더해져 외적인 활약과 추진력이 극대화됩니다.'
+      },
+      6: {
+        title: '새벽 안개를 머금은 흑진주 아우라',
+        summary: '차분한 달빛의 깊이와 은은한 태양의 온기가 절묘하게 교차합니다.\n말수가 적어도 공기의 밀도를 바꾸는 묘한 흡입력을 지닌 세련된 비율입니다.',
+        vibe: '고요하고 몽환적인 새벽 공기 속에 은은한 온기가 감도는 고급스러운 무드',
+        charm: '과하게 드러내지 않아도 자연스럽게 시선이 꽂히는 은근한 신비감',
+        year2026: '6개의 음기가 2026 병오년의 뜨거운 양기를 우아하게 조율해 가장 매력적인 균형을 만듭니다.'
+      },
+      7: {
+        title: '푸른 새벽녘의 은하수 결계',
+        summary: '일곱 개의 달빛 구슬이 만들어내는 고요하고 깊이 있는 분위기입니다.\n소란스러운 공간에서도 자신만의 우아한 결계를 유지하며 오래도록 스며듭니다.',
+        vibe: '서늘하고 정제된 달빛 결계와 깊은 감성이 돋보이는 아우라',
+        charm: '속내를 쉽게 다 보여주지 않아 오히려 더 궁금해지고 빠져들게 만드는 깊이감',
+        year2026: '짙은 음기 속에 2026 병오년의 밝은 불빛이 비치면서 내면의 재능이 밖으로 드러납니다.'
+      },
+      8: {
+        title: '카메라를 집어삼키는 달빛 아이콘',
+        summary: '여덟 개의 음기와 두 개의 양기가 어우러진 대표적 연예인 황금비율입니다.\n서늘하고 치명적인 아우라 속에 숨은 두 개의 햇살 온기가 반전 매력을 완성합니다.',
+        vibe: '무심한 표정조차 한 편의 영화처럼 만드는 서늘하고 몽환적인 흡입력',
+        charm: '차가워 보이는 첫인상과 달리 한 번 웃을 때 터지는 치명적 반전 온기',
+        year2026: '풍부한 음기 베이스 위에 2026 병오년 세운이 스포트라이트처럼 비추어 존재감이 폭발합니다.'
+      },
+      9: {
+        title: '새벽 3시의 벨벳 달빛 아우라',
+        summary: '열 글자 중 무려 아홉 글자가 음기로 응축된 고농도 몽환 타입입니다.\n깊은 밤바다처럼 끝을 알 수 없는 아우라로 주변 공기를 단번에 압도합니다.',
+        vibe: '짙은 벨벳 밤하늘처럼 깊고 서늘하며 범접하기 어려운 신비주의 무드',
+        charm: '사람들의 시선과 감정을 조용히 빨아들이는 자석 같은 카리스마',
+        year2026: '극대화된 음기의 깊이에 2026 병오년의 화기가 더해져 독보적인 아티스트 파동이 살아납니다.'
+      },
+      10: {
+        title: '전설의 순음(純陰) 몽환 결정체',
+        summary: '열 글자 전부가 음(陰)으로만 이루어진 극희귀 순도 100% 음기 사주입니다.\n걸어 다니는 새벽안개처럼 현실감 없을 만큼 몽환적인 천상계 아우라를 품었습니다.',
+        vibe: '순도 100% 달빛으로 빚어낸 듯 서늘하고 신비로운 초현실적 무드',
+        charm: '눈빛과 분위기만으로 서사를 완성해버리는 압도적 흡입력',
+        year2026: '순수한 음의 세계에 2026 병오년의 태양빛이 스며들어 세상에 이름을 각인시키는 시기입니다.'
+      }
+    };
+
+    /**
+     * =========================================================================
+     * 3. CURATED 64 KOREAN FEMALE & MALE IDOLS / ACTORS DATABASE
+     *    Every celebrity's exact 10-character Saju is computed via ManseryeokEngine!
+     * =========================================================================
+     */
+    const RAW_CELEBRITIES = {
+      female: [
+        { name: '제니', group: '블랙핑크 · 가수', date: '1996-01-16', tag: '#냉미녀반전온기 #하이엔드아우라' },
+        { name: '태연', group: '소녀시대 · 가수', date: '1989-03-09', tag: '#새벽공기음색 #섬세한달빛결계' },
+        { name: '설윤', group: '엔믹스 · 가수', date: '2004-01-26', tag: '#순정만화비주얼 #청초한달빛무드' },
+        { name: '한소희', group: '배우', date: '1994-11-18', tag: '#치명적서늘함 #시선압도아우라' },
+        { name: '해린', group: '뉴진스 · 가수', date: '2006-05-15', tag: '#고양이신비주의 #몽환적눈빛' },
+        { name: '카리나', group: '에스파 · 가수', date: '2000-04-11', tag: '#비현실냉미녀 #다정한반전매력' },
+        { name: '장원영', group: '아이브 · 가수', date: '2004-08-31', tag: '#무대위주인공 #반짝이는스타성' },
+        { name: '아이유', group: '가수 · 배우', date: '1993-05-16', tag: '#단단한내면 #서정적달빛서사' },
+        { name: '수지', group: '가수 · 배우', date: '1994-10-10', tag: '#청순달빛감성 #화사한첫사랑무드' },
+        { name: '윈터', group: '에스파 · 가수', date: '2001-01-01', tag: '#한겨울눈꽃 #맑고서늘한청량미' },
+        { name: '안유진', group: '아이브 · 가수', date: '2003-09-01', tag: '#시원한청량미 #깊은눈빛반전' },
+        { name: '김지원', group: '배우', date: '1992-10-19', tag: '#우아한기품 #단단한달빛카리스마' },
+        { name: '고윤정', group: '배우', date: '1996-04-22', tag: '#클래식고전미 #담백하고깊은무드' },
+        { name: '닝닝', group: '에스파 · 가수', date: '2002-10-23', tag: '#매혹적눈빛 #화려한무대흡입력' },
+        { name: '사나', group: '트와이스 · 가수', date: '1996-12-29', tag: '#사랑스러운온기 #묘한몽환미' },
+        { name: '미연', group: '(여자)아이들 · 가수', date: '1997-01-31', tag: '#화사한햇살미모 #차분한음색' },
+        { name: '로제', group: '블랙핑크 · 가수', date: '1997-02-11', tag: '#금빛노을감성 #아티스트아우라' },
+        { name: '지수', group: '블랙핑크 · 가수·배우', date: '1995-01-03', tag: '#단아한고전미 #맑고단단한중심' },
+        { name: '리사', group: '블랙핑크 · 가수', date: '1997-03-27', tag: '#압도적발산에너지 #무대장악력' },
+        { name: '슬기', group: '레드벨벳 · 가수', date: '1994-02-10', tag: '#서늘한무대카리스마 #순수한온기' },
+        { name: '아이린', group: '레드벨벳 · 가수', date: '1991-03-29', tag: '#정제된냉미녀 #고요한달빛무드' },
+        { name: '츄', group: '가수', date: '1999-10-20', tag: '#인간비타민 #기분좋은햇살파동' },
+        { name: '나연', group: '트와이스 · 가수', date: '1995-09-22', tag: '#상큼한주인공 #화사한무대체질' },
+        { name: '채원', group: '르세라핌 · 가수', date: '2000-08-01', tag: '#도도한단발무드 #톡쏘는청량감' },
+        { name: '카즈하', group: '르세라핌 · 가수', date: '2003-08-09', tag: '#우아한백조결 #담백하고맑은기품' },
+        { name: '민지', group: '뉴진스 · 가수', date: '2004-05-07', tag: '#클래식첫사랑 #맑고단정한생기' },
+        { name: '하니', group: '뉴진스 · 가수', date: '2004-10-06', tag: '#통통튀는생동감 #사랑스러운무드' },
+        { name: '다니엘', group: '뉴진스 · 가수', date: '2005-04-11', tag: '#햇살가득미소 #동화속요정아우라' },
+        { name: '혜인', group: '뉴진스 · 가수', date: '2008-04-21', tag: '#신비로운모델포스 #깊이있는분위기' },
+        { name: '신세경', group: '배우', date: '1990-07-29', tag: '#차분한밤호수 #깊이있는우아함' },
+        { name: '전종서', group: '배우', date: '1994-07-05', tag: '#예측불가서늘함 #강렬한흡입력' },
+        { name: '김태리', group: '배우', date: '1990-04-24', tag: '#생동감넘치는햇살 #깊은연기서사' }
+      ],
+      male: [
+        { name: '태민', group: '샤이니 · 가수', date: '1993-07-18', tag: '#몽환적무대아우라 #공기압도퍼포먼스' },
+        { name: '차은우', group: '아스트로 · 가수·배우', date: '1997-03-30', tag: '#단정한귀공자 #차분하고맑은기품' },
+        { name: '변우석', group: '배우', date: '1991-10-31', tag: '#가을밤멜로서사 #다정한온기공존' },
+        { name: '정국', group: '방탄소년단 · 가수', date: '1997-09-01', tag: '#강렬한무대카리스마 #순수한열정' },
+        { name: '이수혁', group: '배우', date: '1988-05-31', tag: '#서늘한냉미남정석 #신비주의아우라' },
+        { name: '현진', group: '스트레이 키즈 · 가수', date: '2000-03-20', tag: '#처연한예술가무드 #치명적몽환미' },
+        { name: '뷔', group: '방탄소년단 · 가수', date: '1995-12-30', tag: '#클래식재즈선율 #깊고신비로운결' },
+        { name: '지민', group: '방탄소년단 · 가수', date: '1995-10-13', tag: '#섬세한달빛선 #강렬한무대흡입력' },
+        { name: '진', group: '방탄소년단 · 가수', date: '1992-12-04', tag: '#단정한클래식미 #유쾌하고맑은온기' },
+        { name: '백현', group: '엑소 · 가수', date: '1992-05-06', tag: '#치명적무대아우라 #밝은친화력반전' },
+        { name: '도경수', group: '엑소 · 가수·배우', date: '1993-01-12', tag: '#담백한진정성 #묵직하고단단한결' },
+        { name: '송강', group: '배우', date: '1994-04-23', tag: '#화사한비주얼 #서늘한소년미공존' },
+        { name: '박보검', group: '배우', date: '1993-06-16', tag: '#따사로운햇살미소 #맑고단정한기품' },
+        { name: '최우식', group: '배우', date: '1990-03-26', tag: '#편안한자연스러움 #섬세한감수성' },
+        { name: '원빈', group: '라이즈 · 가수', date: '2002-03-02', tag: '#서늘한미소년무드 #강렬한흡입력' },
+        { name: '성한빈', group: '제로베이스원 · 가수', date: '2001-06-13', tag: '#맑은첫사랑비주얼 #섬세한리더십' },
+        { name: '장하오', group: '제로베이스원 · 가수', date: '2000-07-25', tag: '#우아한귀공자결 #깊이있는아우라' },
+        { name: '연준', group: '투모로우바이투게더 · 가수', date: '1999-09-13', tag: '#트렌디한서늘함 #시선장악카리스마' },
+        { name: '수빈', group: '투모로우바이투게더 · 가수', date: '2000-12-05', tag: '#청량한소년미 #차분하고따뜻한결' },
+        { name: '원우', group: '세븐틴 · 가수', date: '1996-07-17', tag: '#지적인냉미남 #고요한새벽감성' },
+        { name: '민규', group: '세븐틴 · 가수', date: '1997-04-06', tag: '#화사한햇살카리스마 #건강한에너지' },
+        { name: '정한', group: '세븐틴 · 가수', date: '1995-10-04', tag: '#신비로운요정무드 #부드러운달빛결' },
+        { name: '도겸', group: '세븐틴 · 가수', date: '1997-02-18', tag: '#맑은인간비타민 #시원한성량에너지' },
+        { name: '승관', group: '세븐틴 · 가수', date: '1998-01-16', tag: '#따뜻한생동감 #섬세한감성표현' },
+        { name: '이도현', group: '배우', date: '1995-04-11', tag: '#깊고아련한눈빛 #단단한중심감' },
+        { name: '김선호', group: '배우', date: '1986-05-08', tag: '#부드러운보조개미소 #차분한진중함' },
+        { name: '추영우', group: '배우', date: '1999-06-05', tag: '#서늘한소년미와남성미 #깊은눈빛서사' },
+        { name: '로운', group: '배우', date: '1996-08-07', tag: '#화사한피지컬아우라 #로맨틱감성' },
+        { name: '황민현', group: '가수 · 배우', date: '1995-08-09', tag: '#정갈한백옥미남 #차분하고맑은결' },
+        { name: '임시완', group: '배우 · 가수', date: '1988-12-01', tag: '#서늘한지성미 #투명한소년미반전' },
+        { name: '박형식', group: '배우 · 가수', date: '1991-11-16', tag: '#온화한귀공자무드 #부드러운카리스마' },
+        { name: '이동욱', group: '배우', date: '1981-11-06', tag: '#서늘한달빛카리스마 #위트있는반전' }
+      ]
+    };
+
+    const COMPUTED_CELEBRITIES = { female: [], male: [] };
+
+    function buildCelebrityArchive() {
+      ['female', 'male'].forEach(gender => {
+        COMPUTED_CELEBRITIES[gender] = RAW_CELEBRITIES[gender].map(celeb => {
+          const [y, m, d] = celeb.date.split('-').map(Number);
+          const saju = ManseryeokEngine.calculate({
+            nickname: celeb.name,
+            gender,
+            calType: 'solar',
+            year: y,
+            month: m,
+            day: d,
+            unknownTime: true
+          });
+          return {
+            ...celeb,
+            gender,
+            saju,
+            yinCount: saju.yinCount,
+            yangCount: saju.yangCount
+          };
+        });
+      });
+    }
+
+    /**
+     * =========================================================================
+     * 4. SUBTLE TACTILE AUDIO CHIMES
+     * =========================================================================
+     */
+    const SoundFX = {
+      ctx: null,
+      muted: false,
+      init() {
+        try {
+          if (!this.ctx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) this.ctx = new AudioCtx();
+          }
+          if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+        } catch (e) {}
+      },
+      playChime(index = 0, isYin = true) {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          const notes = [440, 493.88, 523.25, 587.33, 659.25, 739.99, 783.99, 880, 987.77, 1046.5];
+          osc.type = isYin ? 'sine' : 'triangle';
+          osc.frequency.setValueAtTime(notes[index % notes.length], now);
+          gain.gain.setValueAtTime(0.0001, now);
+          gain.gain.exponentialRampToValueAtTime(0.038, now + 0.012);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.24);
+        } catch (e) {}
+      }
+    };
+
+    /**
+     * =========================================================================
+     * 5. APPLICATION STATE & UI CONTROLLERS
+     * =========================================================================
+     */
+    const State = {
+      theme: 'dark',
+      gender: 'female',
+      calType: 'solar',
+      result: null,
+      activeCelebTab: 'female',
+      displayedCelebs: [],
+      cachedCardDataUrl: null
+    };
+
+    const PRESET_PROFILES = {
+      jennie:   { nickname: '제니', gender: 'female', calType: 'solar', year: 1996, month: 1, day: 16, unknownTime: true },
+      wonyoung: { nickname: '장원영', gender: 'female', calType: 'solar', year: 2004, month: 8, day: 31, unknownTime: true },
+      eunwoo:   { nickname: '차은우', gender: 'male', calType: 'solar', year: 1997, month: 3, day: 30, unknownTime: true },
+      wooseok:  { nickname: '변우석', gender: 'male', calType: 'solar', year: 1991, month: 10, day: 31, unknownTime: true }
+    };
+
+    function showToast(message) {
+      const box = document.getElementById('toast-container');
+      const txt = document.getElementById('toast-text');
+      txt.textContent = message;
+      box.classList.remove('opacity-0', 'translate-y-3');
+      box.classList.add('opacity-100', 'translate-y-0');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        box.classList.add('opacity-0', 'translate-y-3');
+        box.classList.remove('opacity-100', 'translate-y-0');
+      }, 2500);
+    }
+
+    function setTheme(themeName) {
+      State.theme = themeName;
+      document.documentElement.setAttribute('data-theme', themeName);
+      const icon = document.getElementById('theme-icon');
+      const label = document.getElementById('theme-label');
+      if (themeName === 'dark') {
+        icon.textContent = '🌙';
+        label.textContent = '달빛 다크';
+      } else {
+        icon.textContent = '📜';
+        label.textContent = '한지 라이트';
+      }
+      // Refresh cached PNG preview if visible so it matches the chosen editorial theme
+      if (State.result && !document.getElementById('inline-card-preview-box').classList.contains('hidden')) {
+        generateArchiveCardDataUrl().then(url => {
+          document.getElementById('inline-preview-image').src = url;
+        });
+      }
+    }
+
+    function switchView(viewName) {
+      const inputView = document.getElementById('view-input');
+      const resultView = document.getElementById('view-result');
+      const backBtn = document.getElementById('btn-back-to-input');
+      const brandGroup = document.getElementById('brand-badge-group');
+
+      if (viewName === 'result') {
+        inputView.classList.add('hidden');
+        resultView.classList.remove('hidden');
+        resultView.classList.remove('animate-fade-up');
+        void resultView.offsetWidth;
+        resultView.classList.add('animate-fade-up');
+
+        backBtn.classList.remove('hidden');
+        backBtn.classList.add('inline-flex');
+        brandGroup.classList.add('hidden');
+      } else {
+        resultView.classList.add('hidden');
+        inputView.classList.remove('hidden');
+        inputView.classList.remove('animate-fade-up');
+        void inputView.offsetWidth;
+        inputView.classList.add('animate-fade-up');
+
+        backBtn.classList.add('hidden');
+        backBtn.classList.remove('inline-flex');
+        brandGroup.classList.remove('hidden');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function getCelestialOrbSVG(polarity, sizeClass = 'w-4 h-4') {
+      if (polarity === 'yin') {
+        return `<svg class="${sizeClass} text-white drop-shadow-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+      }
+      return `<svg class="${sizeClass} text-white drop-shadow-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v2.2M12 19.8V22M4.93 4.93l1.5 1.5M17.57 17.57l1.5 1.5M2 12h2.2M19.8 12H22M4.93 19.07l1.5-1.5M17.57 6.43l1.5-1.5"/></svg>`;
+    }
+
+    /**
+     * =========================================================================
+     * 6. RENDER EDITORIAL RESULT VIEW
+     * =========================================================================
+     */
+    function renderEditorialResult(res) {
+      State.result = res;
+      State.activeCelebTab = res.gender;
+      State.cachedCardDataUrl = null;
+      document.getElementById('inline-card-preview-box').classList.add('hidden');
+
+      switchView('result');
+
+      const yin = res.yinCount;
+      const yang = res.yangCount;
+      const archetype = AURA_ARCHETYPES[yin] || AURA_ARCHETYPES[6];
+
+      // 1. Metadata Line (birth info, gender, Day Master)
+      const genderText = res.gender === 'female' ? '여성' : '남성';
+      const calText = res.calType === 'solar' ? '양력' : (res.calType === 'lunar' ? '음력 평달' : '음력 윤달');
+      const dm = res.dayMaster;
+      document.getElementById('res-meta-line').textContent =
+        `${genderText} · ${calText} ${res.inputDateStr} · 일간 ${dm.hanja} · ${dm.reading}`;
+
+      // 2. Hero Score & Balance Bar
+      document.getElementById('res-owner-caption').textContent = `${res.nickname}님의 사주 명리 음양 스펙트럼`;
+      const yinNumEl = document.getElementById('res-yin-num');
+      yinNumEl.textContent = `${yin}개`;
+      yinNumEl.style.color = yin >= 5 ? 'var(--yin-primary)' : 'var(--yang-primary)';
+      document.getElementById('res-yang-num').textContent = `${yang}개`;
+
+      const yinPct = yin * 10;
+      const yangPct = yang * 10;
+      document.getElementById('res-yin-pct').textContent = `${yinPct}%`;
+      document.getElementById('res-yang-pct').textContent = `${yangPct}%`;
+      document.getElementById('balance-bar-yin').style.width = `${yinPct}%`;
+      document.getElementById('balance-bar-yang').style.width = `${yangPct}%`;
+
+      document.getElementById('hero-glow').style.background =
+        yin >= 5 ? 'var(--glow-lunar)' : 'var(--glow-solar)';
+
+      // 3. 10-Slot Celestial Orb Grid (Smooth Staggered Entrance)
+      const orbGrid = document.getElementById('celestial-orb-grid');
+      orbGrid.innerHTML = '';
+      const orderedOrbs = [...Array(yin).fill('yin'), ...Array(yang).fill('yang')];
+
+      orderedOrbs.forEach((pol, idx) => {
+        const slot = document.createElement('div');
+        slot.className = 'aspect-square w-full rounded-full orb-empty flex items-center justify-center';
+        orbGrid.appendChild(slot);
+
+        setTimeout(() => {
+          slot.className = `aspect-square w-full rounded-full ${pol === 'yin' ? 'orb-yin' : 'orb-yang'} flex items-center justify-center animate-orb-in`;
+          slot.innerHTML = getCelestialOrbSVG(pol, 'w-3.5 h-3.5 sm:w-4 sm:h-4');
+          SoundFX.playChime(idx, pol === 'yin');
+        }, idx * 55);
+      });
+
+      // 4. Aura Title, Poetic Summary & 3 Insight Cards
+      document.getElementById('res-aura-title').textContent = archetype.title;
+      document.getElementById('res-poetic-summary').innerHTML = archetype.summary.replace('\n', '<br/>');
+      document.getElementById('insight-vibe').textContent = archetype.vibe;
+      document.getElementById('insight-charm').textContent = archetype.charm;
+      document.getElementById('insight-2026').textContent = archetype.year2026;
+
+      // 5. Same-Yin Celebrity Match Card (Default to User's Gender)
+      updateCelebTabUI(res.gender);
+      renderCelebrityGrid(yin, res.gender);
+
+      // 6. Interactive 10-Character Saju Pillars Breakdown
+      document.getElementById('chart-mode-badge').textContent = res.unknownTime
+        ? '삼주 6글자 + 현재 대운 + 2026 세운'
+        : '원국 8글자 + 2026 세운';
+      renderPillarsTable(res);
+    }
+
+    function updateCelebTabUI(activeGender) {
+      document.querySelectorAll('.celeb-tab-btn').forEach(btn => {
+        const isSelected = btn.dataset.celebTab === activeGender;
+        if (isSelected) {
+          btn.style.background = 'var(--yin-deep)';
+          btn.style.color = '#FFFFFF';
+          btn.classList.add('font-bold', 'shadow-sm');
+          btn.classList.remove('font-semibold');
+        } else {
+          btn.style.background = 'transparent';
+          btn.style.color = 'var(--text-secondary)';
+          btn.classList.remove('font-bold', 'shadow-sm');
+          btn.classList.add('font-semibold');
+        }
+      });
+    }
+
+    function getMatchedCelebs(targetYin, gender) {
+      const pool = COMPUTED_CELEBRITIES[gender] || [];
+      const exact = pool.filter(c => c.yinCount === targetYin);
+
+      if (exact.length >= 2) {
+        return exact.slice(0, 6).map(c => ({ ...c, isExact: true }));
+      }
+
+      // If an extreme edge count has fewer than 2 exact matches, include closest resonance matches
+      const list = exact.map(c => ({ ...c, isExact: true }));
+      const nearby = pool
+        .filter(c => c.yinCount !== targetYin)
+        .sort((a, b) => Math.abs(a.yinCount - targetYin) - Math.abs(b.yinCount - targetYin));
+
+      for (const c of nearby) {
+        if (list.length >= 4) break;
+        list.push({ ...c, isExact: false });
+      }
+      return list;
+    }
+
+    function renderCelebrityGrid(targetYin, gender) {
+      const genderLabel = gender === 'female' ? '여자' : '남자';
+      document.getElementById('celeb-heading').textContent =
+        `나와 음기 ${targetYin}개가 같은 ${genderLabel} 연예인`;
+
+      const matches = getMatchedCelebs(targetYin, gender);
+      State.displayedCelebs = matches;
+
+      const grid = document.getElementById('celeb-grid');
+      grid.innerHTML = '';
+
+      matches.forEach(celeb => {
+        const dm = celeb.saju.dayMaster;
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'rounded-2xl subtle-box subtle-box-interactive p-4 text-left transition-all active:scale-[0.985] cursor-pointer flex flex-col justify-between gap-2.5';
+
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-2.5">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <!-- Stylized Five-Element Monogram Emblem -->
+              <div class="w-10 h-10 rounded-xl flex flex-col items-center justify-center shrink-0 border"
+                   style="background: ${dm.color}18; border-color: ${dm.color}45;">
+                <span class="font-serif text-sm font-black leading-none" style="color: ${dm.color};">${dm.hanja}</span>
+                <span class="text-[9px] font-bold mt-0.5" style="color: var(--text-secondary);">${celeb.name.slice(0, 2)}</span>
+              </div>
+
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="font-serif text-base font-bold truncate" style="color: var(--text-primary);">${celeb.name}</span>
+                  <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold truncate"
+                        style="background: var(--bg-subtle); color: var(--text-secondary); border: 1px solid var(--border-hairline);">
+                    ${celeb.group}
+                  </span>
+                </div>
+                <span class="block text-[11px] mt-0.5" style="color: var(--text-muted);">
+                  ${celeb.date.replace(/-/g, '.')} · 일간 ${dm.hanja}(${dm.reading})
+                </span>
+              </div>
+            </div>
+
+            <!-- Exact Yin:Yang Pill -->
+            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold shrink-0"
+                  style="background: var(--yin-surface); color: var(--yin-primary); border: 1px solid var(--yin-border);">
+              음 ${celeb.yinCount} : 양 ${celeb.yangCount}
+            </span>
+          </div>
+
+          <div class="flex items-center justify-between gap-2 pt-2 border-t" style="border-color: var(--border-hairline);">
+            <span class="text-[11px] font-medium truncate" style="color: var(--yin-primary);">${celeb.tag}</span>
+            <span class="text-[10px] font-semibold shrink-0" style="color: var(--text-muted);">사주 비교 →</span>
+          </div>
+        `;
+
+        card.addEventListener('click', () => openCelebrityComparisonModal(celeb));
+        grid.appendChild(card);
+      });
+    }
+
+    function openCelebrityComparisonModal(celeb) {
+      const user = State.result;
+      if (!user) return;
+
+      SoundFX.playChime(4, true);
+
+      document.getElementById('cmp-modal-title').textContent = `${user.nickname} × ${celeb.name} 사주 10글자 비교`;
+      document.getElementById('cmp-modal-subtitle').textContent = `${celeb.group} · 양력 ${celeb.date.replace(/-/g, '.')}`;
+
+      document.getElementById('cmp-user-ratio').textContent = `음기 ${user.yinCount} : 양기 ${user.yangCount}`;
+      document.getElementById('cmp-user-dm').textContent = `일간 ${user.dayMaster.hanja} · ${user.dayMaster.reading}`;
+
+      document.getElementById('cmp-celeb-label').textContent = celeb.name;
+      document.getElementById('cmp-celeb-ratio').textContent = `음기 ${celeb.yinCount} : 양기 ${celeb.yangCount}`;
+      document.getElementById('cmp-celeb-dm').textContent = `일간 ${celeb.saju.dayMaster.hanja} · ${celeb.saju.dayMaster.reading}`;
+      document.getElementById('cmp-celeb-grid-title').textContent = `${celeb.name} 사주 10글자`;
+
+      const renderMiniPillars = (pillars, containerId) => {
+        const el = document.getElementById(containerId);
+        el.innerHTML = pillars.map(p => `
+          <div class="flex flex-col gap-1">
+            <span class="text-[9px] font-bold py-0.5 rounded" style="color: ${p.isSelf ? 'var(--yin-primary)' : 'var(--text-muted)'};">
+              ${p.label}
+            </span>
+            ${[p.stem, p.branch].map(ch => {
+              const isYin = ch.polarity === 'yin';
+              return `
+                <div class="py-1.5 px-1 rounded-xl border flex flex-col items-center"
+                     style="background: ${isYin ? 'var(--yin-surface)' : 'var(--yang-surface)'};
+                            border-color: ${isYin ? 'var(--yin-border)' : 'var(--yang-border)'};">
+                  <span class="font-serif text-sm font-black leading-tight" style="color: var(--text-primary);">${ch.hanja}</span>
+                  <span class="text-[9px] font-semibold" style="color: var(--text-secondary);">${ch.hangul}·${isYin ? '음' : '양'}</span>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `).join('');
+      };
+
+      renderMiniPillars(user.pillars, 'cmp-user-grid');
+      renderMiniPillars(celeb.saju.pillars, 'cmp-celeb-grid');
+
+      const sameDM = user.dayMaster.idx === celeb.saju.dayMaster.idx;
+      const sameElem = user.dayMaster.element === celeb.saju.dayMaster.element;
+      let synergy = `${user.nickname}님과 ${celeb.name}님은 사주 10글자 속 음양의 밀도가 같아, 외부로 발산하는 에너지와 내면으로 끌어당기는 분위기의 호흡이 놀라울 만큼 닮아 있습니다.`;
+      if (sameDM) {
+        synergy = `심지어 나 자신의 본질을 뜻하는 일간(${user.dayMaster.hanja}·${user.dayMaster.reading})까지 정확히 일치합니다! 기질의 결이 가장 깊게 공명하는 조합입니다.`;
+      } else if (sameElem) {
+        synergy = `음양 비율뿐만 아니라 일간의 오행(${user.dayMaster.elementFull})까지 같아 감수성과 분위기 결이 자연스럽게 통합니다.`;
+      }
+      document.getElementById('cmp-synergy-note').textContent = synergy;
+
+      document.getElementById('celeb-compare-modal').classList.remove('hidden');
+    }
+
+    function renderPillarsTable(res) {
+      const table = document.getElementById('pillars-table');
+      table.innerHTML = '';
+
+      res.pillars.forEach((pillar, pIdx) => {
+        const col = document.createElement('div');
+        col.className = 'flex flex-col gap-1.5';
+
+        const colHead = document.createElement('div');
+        colHead.className = 'py-1 px-1 rounded-lg text-[10px] sm:text-[11px] font-bold tracking-tight';
+        if (pillar.isSelf) {
+          colHead.style.background = 'var(--yin-surface)';
+          colHead.style.color = 'var(--yin-primary)';
+          colHead.style.border = '1px solid var(--yin-border)';
+        } else {
+          colHead.style.background = 'var(--bg-subtle)';
+          colHead.style.color = 'var(--text-secondary)';
+        }
+        colHead.textContent = pillar.label;
+        col.appendChild(colHead);
+
+        [pillar.stem, pillar.branch].forEach((ch, cIdx) => {
+          const isYin = ch.polarity === 'yin';
+          const tile = document.createElement('button');
+          tile.type = 'button';
+          tile.className = 'saju-tile py-2.5 px-1 rounded-2xl border flex flex-col items-center justify-center transition-all cursor-pointer active:scale-95';
+          tile.style.background = isYin ? 'var(--yin-surface)' : 'var(--yang-surface)';
+          tile.style.borderColor = isYin ? 'var(--yin-border)' : 'var(--yang-border)';
+
+          tile.innerHTML = `
+            <span class="font-serif text-lg sm:text-xl font-black leading-none mb-1" style="color: var(--text-primary);">${ch.hanja}</span>
+            <span class="text-[10px] font-semibold mb-1.5" style="color: var(--text-secondary);">${ch.hangul} · ${ch.reading}</span>
+            <div class="flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full" style="background: ${ch.color};"></span>
+              <span class="px-1.5 py-0.5 rounded text-[9px] font-bold"
+                    style="background: ${isYin ? 'rgba(99,102,241,0.22)' : 'rgba(217,119,6,0.22)'};
+                           color: ${isYin ? 'var(--yin-primary)' : 'var(--yang-primary)'};">
+                ${isYin ? '음' : '양'}
+              </span>
+            </div>
+          `;
+
+          tile.addEventListener('click', () => {
+            SoundFX.playChime(pIdx * 2 + cIdx, isYin);
+            updateCharacterInspector(ch, pillar, tile);
+          });
+
+          col.appendChild(tile);
+
+          // Default highlight: 일주 천간 (일간)
+          if (pillar.isSelf && cIdx === 0) {
+            setTimeout(() => updateCharacterInspector(ch, pillar, tile), 0);
+          }
+        });
+
+        table.appendChild(col);
+      });
+    }
+
+    function updateCharacterInspector(ch, pillar, activeTile) {
+      document.querySelectorAll('.saju-tile').forEach(t => {
+        t.style.boxShadow = 'none';
+        t.style.transform = 'scale(1)';
+      });
+      if (activeTile) {
+        activeTile.style.boxShadow = '0 0 0 2px var(--yin-primary)';
+        activeTile.style.transform = 'translateY(-1px)';
+      }
+
+      const isYin = ch.polarity === 'yin';
+      document.getElementById('insp-dot').style.background = ch.color;
+      document.getElementById('insp-title').textContent = `${ch.hanja} (${ch.hangul} · ${ch.reading} · ${ch.elementFull})`;
+
+      const pill = document.getElementById('insp-polarity-pill');
+      pill.textContent = isYin ? '음(陰) 🌙' : '양(陽) ☀️';
+      pill.style.background = isYin ? 'var(--yin-surface)' : 'var(--yang-surface)';
+      pill.style.color = isYin ? 'var(--yin-primary)' : 'var(--yang-primary)';
+      pill.style.border = `1px solid ${isYin ? 'var(--yin-border)' : 'var(--yang-border)'}`;
+
+      document.getElementById('insp-role').textContent = pillar.roleDesc;
+      document.getElementById('insp-desc').textContent = ch.desc;
+    }
+
+    /**
+     * =========================================================================
+     * 7. HIGH-RESOLUTION 1080×1350 ARCHIVE PNG CARD GENERATOR & SHARE
+     * =========================================================================
+     */
+    async function generateArchiveCardDataUrl() {
+      try {
+        if (document.fonts && document.fonts.ready) await document.fonts.ready;
+      } catch (e) {}
+
+      const res = State.result;
+      const yin = res.yinCount;
+      const yang = res.yangCount;
+      const archetype = AURA_ARCHETYPES[yin] || AURA_ARCHETYPES[6];
+      const matches = State.displayedCelebs.slice(0, 4);
+      const isLight = State.theme === 'light';
+
+      const W = 1080;
+      const H = 1350;
+      const canvas = document.createElement('canvas');
+      canvas.width = W;
+      canvas.height = H;
+      const ctx = canvas.getContext('2d');
+
+      // 1. Background Base
+      const bgGrad = ctx.createLinearGradient(0, 0, W, H);
+      if (isLight) {
+        bgGrad.addColorStop(0, '#F8F6F1');
+        bgGrad.addColorStop(0.5, '#F2EFE7');
+        bgGrad.addColorStop(1, '#F8F6F1');
+      } else {
+        bgGrad.addColorStop(0, '#0B0D12');
+        bgGrad.addColorStop(0.5, '#111524');
+        bgGrad.addColorStop(1, '#0B0D12');
+      }
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, W, H);
+
+      // 2. Ambient Lunar/Solar Halo
+      const halo = ctx.createRadialGradient(W / 2, 320, 20, W / 2, 320, 480);
+      if (yin >= 5) {
+        halo.addColorStop(0, isLight ? 'rgba(99, 102, 241, 0.14)' : 'rgba(99, 102, 241, 0.30)');
+        halo.addColorStop(0.6, isLight ? 'rgba(147, 165, 253, 0.05)' : 'rgba(147, 165, 253, 0.10)');
+      } else {
+        halo.addColorStop(0, isLight ? 'rgba(217, 119, 6, 0.14)' : 'rgba(217, 119, 6, 0.28)');
+        halo.addColorStop(0.6, isLight ? 'rgba(251, 191, 36, 0.05)' : 'rgba(251, 191, 36, 0.10)');
+      }
+      halo.addColorStop(1, 'transparent');
+      ctx.fillStyle = halo;
+      ctx.fillRect(0, 0, W, H);
+
+      // Subtle Starlight Dots in Dark Mode
+      if (!isLight) {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+        for (let i = 0; i < 42; i++) {
+          const sx = ((i * 257) % 980) + 50;
+          const sy = ((i * 389) % 1240) + 55;
+          ctx.beginPath();
+          ctx.arc(sx, sy, (i % 3) * 0.6 + 0.8, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // 3. Double Hairline Editorial Border
+      ctx.strokeStyle = isLight ? 'rgba(24, 24, 27, 0.16)' : 'rgba(255, 255, 255, 0.15)';
+      ctx.lineWidth = 2;
+      drawRoundRect(ctx, 40, 40, W - 80, H - 80, 38);
+      ctx.stroke();
+
+      ctx.strokeStyle = isLight ? 'rgba(24, 24, 27, 0.08)' : 'rgba(255, 255, 255, 0.07)';
+      ctx.lineWidth = 1;
+      drawRoundRect(ctx, 54, 54, W - 108, H - 108, 30);
+      ctx.stroke();
+
+      const textPrimary = isLight ? '#18181B' : '#F5F6FA';
+      const textSecondary = isLight ? '#52525B' : '#B4B9CC';
+      const yinAccent = isLight ? '#4F46E5' : '#93A5FD';
+      const yangAccent = isLight ? '#D97706' : '#FBBF24';
+      const panelFill = isLight ? 'rgba(255, 255, 255, 0.72)' : 'rgba(255, 255, 255, 0.04)';
+      const panelStroke = isLight ? 'rgba(24, 24, 27, 0.10)' : 'rgba(255, 255, 255, 0.10)';
+
+      // 4. Top Archive Pill
+      ctx.fillStyle = isLight ? 'rgba(79, 70, 229, 0.09)' : 'rgba(99, 102, 241, 0.18)';
+      drawRoundRect(ctx, W / 2 - 270, 86, 540, 48, 24);
+      ctx.fill();
+      ctx.fillStyle = yinAccent;
+      ctx.font = '700 21px Pretendard, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(`2026 병오년 만세력 · ${res.nickname} · 일간 ${res.dayMaster.hanja}(${res.dayMaster.reading})`, W / 2, 117);
+
+      // 5. Main Editorial Numeral Headline
+      ctx.fillStyle = textPrimary;
+      ctx.font = '900 80px "Noto Serif KR", serif';
+      ctx.fillText(`음기 ${yin}개`, W / 2 - 96, 232);
+
+      ctx.fillStyle = textSecondary;
+      ctx.font = '500 44px Pretendard, sans-serif';
+      ctx.fillText('/', W / 2 + 52, 228);
+
+      ctx.fillStyle = yangAccent;
+      ctx.font = '700 48px "Noto Serif KR", serif';
+      ctx.fillText(`양기 ${yang}개`, W / 2 + 165, 230);
+
+      // 6. 10-Orb Container
+      ctx.fillStyle = panelFill;
+      drawRoundRect(ctx, 88, 282, W - 176, 152, 28);
+      ctx.fill();
+      ctx.strokeStyle = panelStroke;
+      ctx.stroke();
+
+      const sortedOrbs = [...Array(yin).fill('yin'), ...Array(yang).fill('yang')];
+      const spacing = 84;
+      const startX = W / 2 - (9 * spacing) / 2;
+      sortedOrbs.forEach((pol, i) => {
+        drawCanvasOrb(ctx, startX + i * spacing, 358, 30, pol);
+      });
+
+      // 7. Aura Title & Poetic Summary
+      ctx.fillStyle = textPrimary;
+      ctx.font = '700 42px "Noto Serif KR", serif';
+      ctx.fillText(archetype.title, W / 2, 514);
+
+      const summaryLines = archetype.summary.split('\n');
+      ctx.fillStyle = textSecondary;
+      ctx.font = '500 24px Pretendard, sans-serif';
+      ctx.fillText(summaryLines[0] || '', W / 2, 564);
+      ctx.fillText(summaryLines[1] || '', W / 2, 600);
+
+      // 8. Matched Celebrities Box
+      const celebGenderLabel = State.activeCelebTab === 'female' ? '여자' : '남자';
+      ctx.fillStyle = isLight ? 'rgba(79, 70, 229, 0.06)' : 'rgba(99, 102, 241, 0.11)';
+      drawRoundRect(ctx, 88, 646, W - 176, 184, 28);
+      ctx.fill();
+      ctx.strokeStyle = isLight ? 'rgba(79, 70, 229, 0.22)' : 'rgba(147, 165, 253, 0.28)';
+      ctx.stroke();
+
+      ctx.fillStyle = yinAccent;
+      ctx.font = '700 22px Pretendard, sans-serif';
+      ctx.fillText(`✦ 나와 음기 ${yin}개가 같은 ${celebGenderLabel} 연예인`, W / 2, 694);
+
+      const celebStr = matches.map(c => c.name).join('  ·  ');
+      ctx.fillStyle = textPrimary;
+      ctx.font = '700 34px "Noto Serif KR", serif';
+      ctx.fillText(celebStr, W / 2, 754);
+
+      ctx.fillStyle = textSecondary;
+      ctx.font = '500 21px Pretendard, sans-serif';
+      ctx.fillText(matches.map(c => c.tag).slice(0, 2).join('   '), W / 2, 800);
+
+      // 9. 5-Pillar 10-Character Saju Breakdown
+      ctx.fillStyle = panelFill;
+      drawRoundRect(ctx, 88, 864, W - 176, 326, 28);
+      ctx.fill();
+      ctx.strokeStyle = panelStroke;
+      ctx.stroke();
+
+      const colW = (W - 216) / 5;
+      res.pillars.forEach((p, idx) => {
+        const cx = 108 + colW * idx + colW / 2;
+        ctx.fillStyle = p.isSelf ? yinAccent : textSecondary;
+        ctx.font = '700 21px Pretendard, sans-serif';
+        ctx.fillText(p.label, cx, 910);
+
+        [p.stem, p.branch].forEach((ch, rIdx) => {
+          const cy = 990 + rIdx * 118;
+          const isYin = ch.polarity === 'yin';
+
+          ctx.fillStyle = isYin
+            ? (isLight ? 'rgba(79, 70, 229, 0.09)' : 'rgba(99, 102, 241, 0.16)')
+            : (isLight ? 'rgba(217, 119, 6, 0.10)' : 'rgba(217, 119, 6, 0.16)');
+          drawRoundRect(ctx, cx - 64, cy - 52, 128, 98, 18);
+          ctx.fill();
+
+          ctx.strokeStyle = isYin
+            ? (isLight ? 'rgba(79, 70, 229, 0.28)' : 'rgba(147, 165, 253, 0.36)')
+            : (isLight ? 'rgba(217, 119, 6, 0.28)' : 'rgba(251, 191, 36, 0.36)');
+          ctx.stroke();
+
+          ctx.fillStyle = textPrimary;
+          ctx.font = '900 34px "Noto Serif KR", serif';
+          ctx.fillText(ch.hanja, cx, cy - 6);
+
+          ctx.fillStyle = isYin ? yinAccent : yangAccent;
+          ctx.font = '700 19px Pretendard, sans-serif';
+          ctx.fillText(`${ch.hangul} · ${isYin ? '음' : '양'}`, cx, cy + 28);
+        });
+      });
+
+      // 10. Editorial Footer Mark
+      ctx.fillStyle = textSecondary;
+      ctx.font = '600 21px Pretendard, sans-serif';
+      ctx.fillText('당신의 음기는 몇 개?  |  새벽 달빛 & 현대 명리 아카이브', W / 2, 1262);
+
+      const url = canvas.toDataURL('image/png');
+      State.cachedCardDataUrl = url;
+      return url;
+    }
+
+    function drawRoundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+
+    function drawCanvasOrb(ctx, x, y, r, pol) {
+      ctx.save();
+      ctx.translate(x, y);
+      const grad = ctx.createRadialGradient(-r * 0.3, -r * 0.3, 3, 0, 0, r);
+      if (pol === 'yin') {
+        grad.addColorStop(0, '#EEF2FF');
+        grad.addColorStop(0.55, '#93A5FD');
+        grad.addColorStop(1, '#4338CA');
+        ctx.shadowColor = 'rgba(147, 165, 253, 0.6)';
+      } else {
+        grad.addColorStop(0, '#FEF9C3');
+        grad.addColorStop(0.55, '#FBBF24');
+        grad.addColorStop(1, '#B45309');
+        ctx.shadowColor = 'rgba(251, 191, 36, 0.55)';
+      }
+      ctx.shadowBlur = 14;
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.strokeStyle = '#FFFFFF';
+      if (pol === 'yin') {
+        ctx.beginPath();
+        ctx.arc(-1.5, 0, 11, 0.35 * Math.PI, 1.65 * Math.PI, false);
+        ctx.arc(4.8, -3, 9, 1.55 * Math.PI, 0.45 * Math.PI, true);
+        ctx.closePath();
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        ctx.arc(0, 0, 6.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.lineWidth = 2.3;
+        for (let a = 0; a < 8; a++) {
+          const ang = (Math.PI * 2 * a) / 8;
+          ctx.beginPath();
+          ctx.moveTo(Math.cos(ang) * 9.5, Math.sin(ang) * 9.5);
+          ctx.lineTo(Math.cos(ang) * 13.5, Math.sin(ang) * 13.5);
+          ctx.stroke();
+        }
+      }
+      ctx.restore();
+    }
+
+    async function handleExportPng() {
+      const url = await generateArchiveCardDataUrl();
+      const res = State.result;
+      const a = document.createElement('a');
+      a.download = `${res.nickname}_사주음기_${res.yinCount}개.png`;
+      a.href = url;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      // Also reveal inline preview so mobile users can long-press if desired
+      const previewBox = document.getElementById('inline-card-preview-box');
+      document.getElementById('inline-preview-image').src = url;
+      previewBox.classList.remove('hidden');
+
+      showToast('🖼️ 1080×1350 아카이브 결과 카드가 저장되었습니다');
+    }
+
+    async function handleToggleCardPreview() {
+      const box = document.getElementById('inline-card-preview-box');
+      if (!box.classList.contains('hidden')) {
+        box.classList.add('hidden');
+        return;
+      }
+      const url = await generateArchiveCardDataUrl();
+      document.getElementById('inline-preview-image').src = url;
+      box.classList.remove('hidden');
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function handleCopyText() {
+      const res = State.result;
+      if (!res) return;
+      const archetype = AURA_ARCHETYPES[res.yinCount] || AURA_ARCHETYPES[6];
+      const celebGenderLabel = State.activeCelebTab === 'female' ? '여자' : '남자';
+      const celebNames = State.displayedCelebs.map(c => c.name).join(', ');
+      const orbBar = '🌙'.repeat(res.yinCount) + '☀️'.repeat(res.yangCount);
+      const pillarsLine = res.pillars
+        .map(p => `${p.label}:${p.stem.hanja}${p.branch.hanja}(${p.stem.hangul}${p.branch.hangul})`)
+        .join(' · ');
+
+      const text = [
+        `🌙 [${res.nickname}님의 현대 명리 음양 아카이브]`,
+        `👉 음기 ${res.yinCount}개 / 양기 ${res.yangCount}개 (일간 ${res.dayMaster.hanja}·${res.dayMaster.reading})`,
+        `${orbBar}`,
+        `✦ ${archetype.title}`,
+        `✨ 같은 음기 ${celebGenderLabel} 연예인: ${celebNames}`,
+        `📜 ${pillarsLine}`
+      ].join('\n');
+
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('📋 결과 텍스트가 클립보드에 복사되었습니다');
+      } catch (e) {
+        showToast('복사에 실패했습니다. 다시 시도해주세요.');
+      }
+      document.body.removeChild(ta);
+    }
+
+    /**
+     * =========================================================================
+     * 8. AMBIENT STARLIGHT & INPUT CONTROLS INITIALIZATION
+     * =========================================================================
+     */
+    function initAmbientCanvas() {
+      const canvas = document.getElementById('ambient-canvas');
+      const ctx = canvas.getContext('2d');
+      let motes = [];
+
+      const resize = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        motes = Array.from({ length: 55 }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.3 + 0.4,
+          alpha: Math.random() * 0.5 + 0.12,
+          vy: Math.random() * 0.1 + 0.02,
+          phase: Math.random() * Math.PI * 2
+        }));
+      };
+      resize();
+      window.addEventListener('resize', resize);
+
+      const render = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const isDark = State.theme === 'dark';
+        motes.forEach(m => {
+          m.y -= m.vy;
+          m.phase += 0.018;
+          if (m.y < -4) {
+            m.y = canvas.height + 4;
+            m.x = Math.random() * canvas.width;
+          }
+          const a = m.alpha * (0.65 + 0.35 * Math.sin(m.phase));
+          ctx.fillStyle = isDark
+            ? `rgba(224, 231, 255, ${a})`
+            : `rgba(99, 102, 241, ${a * 0.35})`;
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(render);
+      };
+      render();
+    }
+
+    function initDateSelectors() {
+      const ySel = document.getElementById('sel-year');
+      const mSel = document.getElementById('sel-month');
+      const dSel = document.getElementById('sel-day');
+
+      for (let y = 2026; y >= 1950; y--) {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = `${y}년`;
+        if (y === 1998) opt.selected = true;
+        ySel.appendChild(opt);
+      }
+
+      for (let m = 1; m <= 12; m++) {
+        const opt = document.createElement('option');
+        opt.value = m;
+        opt.textContent = `${m}월`;
+        if (m === 5) opt.selected = true;
+        mSel.appendChild(opt);
+      }
+
+      const syncDays = () => {
+        const y = parseInt(ySel.value, 10);
+        const m = parseInt(mSel.value, 10);
+        const cur = parseInt(dSel.value, 10) || 15;
+        const maxD = State.calType === 'solar' ? new Date(y, m, 0).getDate() : 30;
+        dSel.innerHTML = '';
+        for (let d = 1; d <= maxD; d++) {
+          const opt = document.createElement('option');
+          opt.value = d;
+          opt.textContent = `${d}일`;
+          if (d === Math.min(cur, maxD)) opt.selected = true;
+          dSel.appendChild(opt);
+        }
+      };
+
+      ySel.addEventListener('change', syncDays);
+      mSel.addEventListener('change', syncDays);
+      syncDays();
+      window._syncDays = syncDays;
+    }
+
+    function setGenderControl(gender) {
+      State.gender = gender;
+      document.querySelectorAll('.gender-pill').forEach(btn => {
+        const active = btn.dataset.gender === gender;
+        if (active) {
+          btn.style.background = 'var(--yin-deep)';
+          btn.style.color = '#FFFFFF';
+          btn.classList.add('font-bold', 'shadow-md');
+          btn.classList.remove('font-semibold');
+        } else {
+          btn.style.background = 'transparent';
+          btn.style.color = 'var(--text-secondary)';
+          btn.classList.remove('font-bold', 'shadow-md');
+          btn.classList.add('font-semibold');
+        }
+      });
+    }
+
+    function setCalendarControl(calType) {
+      State.calType = calType;
+      document.querySelectorAll('.cal-pill').forEach(btn => {
+        const active = btn.dataset.cal === calType;
+        if (active) {
+          btn.style.background = 'var(--bg-control)';
+          btn.style.color = 'var(--text-primary)';
+          btn.classList.add('font-bold', 'shadow-sm');
+          btn.classList.remove('font-semibold');
+        } else {
+          btn.style.background = 'transparent';
+          btn.style.color = 'var(--text-secondary)';
+          btn.classList.remove('font-bold', 'shadow-sm');
+          btn.classList.add('font-semibold');
+        }
+      });
+      if (window._syncDays) window._syncDays();
+    }
+
+    function setUnknownTimeState(unknown) {
+      const chk = document.getElementById('chk-unknown-time');
+      const hourSel = document.getElementById('sel-hour');
+      const caption = document.getElementById('composition-caption');
+      chk.checked = unknown;
+      hourSel.disabled = unknown;
+      hourSel.classList.toggle('opacity-40', unknown);
+      caption.innerHTML = unknown
+        ? `<span style="color: var(--yin-primary);">✦</span><span>구성 기준: <strong style="color: var(--yin-primary);">삼주 6글자 + 현재 대운 2글자 + 2026 세운 2글자 = 총 10글자</strong></span>`
+        : `<span style="color: var(--yin-primary);">✦</span><span>구성 기준: <strong style="color: var(--text-secondary);">사주 8글자 + 2026 세운 2글자 = 총 10글자</strong></span>`;
+    }
+
+    function submitCalculation() {
+      SoundFX.init();
+      const nickname = document.getElementById('inp-nickname').value;
+      const year = parseInt(document.getElementById('sel-year').value, 10);
+      const month = parseInt(document.getElementById('sel-month').value, 10);
+      const day = parseInt(document.getElementById('sel-day').value, 10);
+      const hourIndex = parseInt(document.getElementById('sel-hour').value, 10);
+      const unknownTime = document.getElementById('chk-unknown-time').checked;
+
+      const calc = ManseryeokEngine.calculate({
+        nickname,
+        gender: State.gender,
+        calType: State.calType,
+        year,
+        month,
+        day,
+        hourIndex,
+        unknownTime
+      });
+
+      if (calc.error) {
+        showToast(`⚠️ ${calc.error}`);
+        return;
+      }
+
+      renderEditorialResult(calc);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      buildCelebrityArchive();
+      initAmbientCanvas();
+      initDateSelectors();
+
+      setTheme('dark');
+      setGenderControl('female');
+      setCalendarControl('solar');
+      setUnknownTimeState(false);
+
+      // Theme Toggle
+      document.getElementById('btn-theme-toggle').addEventListener('click', () => {
+        setTheme(State.theme === 'dark' ? 'light' : 'dark');
+      });
+
+      // Sound Toggle
+      document.getElementById('btn-sound-toggle').addEventListener('click', () => {
+        SoundFX.muted = !SoundFX.muted;
+        document.getElementById('sound-icon').textContent = SoundFX.muted ? '🔇' : '🔊';
+        if (!SoundFX.muted) SoundFX.playChime(5, true);
+      });
+
+      // Gender & Calendar Pills
+      document.querySelectorAll('.gender-pill').forEach(btn => {
+        btn.addEventListener('click', () => setGenderControl(btn.dataset.gender));
+      });
+      document.querySelectorAll('.cal-pill').forEach(btn => {
+        btn.addEventListener('click', () => setCalendarControl(btn.dataset.cal));
+      });
+
+      // Unknown Time Switch
+      const chkUnknown = document.getElementById('chk-unknown-time');
+      chkUnknown.addEventListener('change', () => setUnknownTimeState(chkUnknown.checked));
+
+      // Quick-Test Preset Chips (Auto-fill & Calculate Immediately)
+      document.querySelectorAll('.preset-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const p = PRESET_PROFILES[chip.dataset.preset];
+          if (!p) return;
+          setGenderControl(p.gender);
+          setCalendarControl(p.calType);
+          document.getElementById('sel-year').value = p.year;
+          document.getElementById('sel-month').value = p.month;
+          if (window._syncDays) window._syncDays();
+          document.getElementById('sel-day').value = p.day;
+          setUnknownTimeState(p.unknownTime);
+          document.getElementById('inp-nickname').value = p.nickname;
+          submitCalculation();
+        });
+      });
+
+      // Form Submit
+      document.getElementById('saju-form').addEventListener('submit', e => {
+        e.preventDefault();
+        submitCalculation();
+      });
+
+      // Top Back Button
+      document.getElementById('btn-back-to-input').addEventListener('click', () => switchView('input'));
+
+      // Celebrity Gender Switcher Tabs
+      document.querySelectorAll('.celeb-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const g = btn.dataset.celebTab;
+          State.activeCelebTab = g;
+          updateCelebTabUI(g);
+          if (State.result) renderCelebrityGrid(State.result.yinCount, g);
+        });
+      });
+
+      // Comparison Modal Close
+      const cmpModal = document.getElementById('celeb-compare-modal');
+      document.getElementById('btn-close-cmp-modal').addEventListener('click', () => cmpModal.classList.add('hidden'));
+      cmpModal.addEventListener('click', e => {
+        if (e.target === cmpModal) cmpModal.classList.add('hidden');
+      });
+
+      // Bottom Export & Share Actions
+      document.getElementById('btn-export-png').addEventListener('click', handleExportPng);
+      document.getElementById('btn-toggle-card-preview').addEventListener('click', handleToggleCardPreview);
+      document.getElementById('btn-close-inline-preview').addEventListener('click', () => {
+        document.getElementById('inline-card-preview-box').classList.add('hidden');
+      });
+      document.getElementById('btn-copy-text').addEventListener('click', handleCopyText);
+    });
+  </script>
+</body>
+</html>
