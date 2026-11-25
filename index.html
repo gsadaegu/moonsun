@@ -253,6 +253,21 @@
       transform: translateX(16px);
       background: #FFFFFF;
     }
+
+    /* Native Mobile Long-Press Image Save Support (iOS Safari, KakaoTalk, Instagram, Naver) */
+    .saveable-card-img {
+      -webkit-touch-callout: default !important;
+      -webkit-user-select: auto !important;
+      user-select: auto !important;
+      pointer-events: auto !important;
+      touch-action: auto !important;
+    }
+
+    .modal-card-preview-img {
+      max-height: 52dvh;
+      width: auto;
+      max-width: 100%;
+    }
   </style>
 </head>
 <body class="editorial-backdrop">
@@ -610,7 +625,7 @@
           </div>
 
           <p class="text-[11px] mb-4" style="color: var(--text-muted);">
-            동일한 2026 병오년 만세력 10글자 기준 · 카드를 클릭하면 나와 해당 연예인의 사주 10글자를 나란히 비교할 수 있습니다.
+            공개된 생년월일(태어난 시간 미상 기준) 2026 병오년 만세력 10글자 산출 · 카드를 클릭하면 나와 해당 연예인의 사주 10글자를 나란히 비교할 수 있습니다.
           </p>
 
           <!-- 2-Column (Mobile 1-Column) Celebrity Cards Grid -->
@@ -674,7 +689,7 @@
             <button id="btn-export-png" type="button"
               class="btn-shimmer py-3.5 px-4 rounded-2xl font-bold text-xs sm:text-sm text-white flex items-center justify-center gap-2 hover:brightness-110 active:scale-[0.985] transition-all cursor-pointer">
               <span>🖼️</span>
-              <span>1080×1350 결과 카드 저장</span>
+              <span>이미지 저장하기 (1080×1350)</span>
             </button>
 
             <div class="grid grid-cols-2 gap-2">
@@ -705,7 +720,7 @@
               </button>
             </div>
             <div class="max-w-[340px] mx-auto rounded-2xl overflow-hidden border shadow-2xl" style="border-color: var(--border-strong);">
-              <img id="inline-preview-image" alt="사주 음기 아카이브 카드 미리보기" class="w-full h-auto block" />
+              <img id="inline-preview-image" alt="사주 음기 아카이브 카드 미리보기" class="saveable-card-img w-full h-auto block" />
             </div>
           </div>
         </section>
@@ -717,6 +732,67 @@
     <footer class="text-center py-4 text-[11px] tracking-wide" style="color: var(--text-muted);">
       당신의 음기는 몇 개? · 새벽 달빛 & 현대 명리 아카이브
     </footer>
+  </div>
+
+  <!-- ==================== MOBILE & IN-APP INSTANT IMAGE SAVE MODAL ==================== -->
+  <div id="export-card-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="archive-card w-full max-w-[480px] rounded-t-[28px] sm:rounded-[28px] p-4 sm:p-6 max-h-[94dvh] overflow-y-auto animate-fade-up">
+      <div class="flex items-center justify-between gap-3 pb-2.5 mb-2.5 border-b" style="border-color: var(--border-hairline);">
+        <div>
+          <span class="block text-[10px] font-bold tracking-[0.16em] uppercase" style="color: var(--yin-primary);">
+            ARCHIVE PHOTO CARD · 1080×1350 PNG
+          </span>
+          <h4 class="font-serif text-base sm:text-lg font-bold" style="color: var(--text-primary);">
+            사주 음양 결과 카드 저장
+          </h4>
+        </div>
+        <button id="btn-close-export-modal" type="button" aria-label="닫기"
+          class="w-8 h-8 rounded-full subtle-box subtle-box-interactive flex items-center justify-center text-sm shrink-0 cursor-pointer"
+          style="color: var(--text-primary);">
+          ✕
+        </button>
+      </div>
+
+      <!-- Tailored Mobile / In-App Long-Press Guidance Banner -->
+      <div id="modal-save-guide" class="rounded-2xl px-3 py-2.5 mb-3 text-[11px] leading-snug border"
+           style="background: var(--yin-surface); border-color: var(--yin-border); color: var(--text-primary);">
+        <strong style="color: var(--yin-primary);">📱 사진첩 저장 안내:</strong>
+        위 카드를 <strong>1초간 꾹 눌러 '사진에 저장'</strong>을 선택하거나, 아래 <strong>사진첩 저장 / 공유하기</strong> 버튼을 눌러주세요.
+      </div>
+
+      <!-- Constrained High-Res Real <img> Element (max-height: 52dvh so all controls fit cleanly on mobile) -->
+      <div class="flex justify-center mb-3">
+        <div class="rounded-2xl overflow-hidden border shadow-2xl inline-flex items-center justify-center"
+             style="border-color: var(--border-strong); background: var(--bg-control);">
+          <img id="modal-card-image" alt="음기 양기 사주 결과 카드 (1080×1350)" class="saveable-card-img modal-card-preview-img block" />
+        </div>
+      </div>
+
+      <!-- Mobile-First Primary Share/Save + Direct Download + Copy Text -->
+      <div class="space-y-2">
+        <button id="btn-modal-web-share" type="button"
+          class="btn-shimmer w-full py-3 px-4 rounded-2xl font-bold text-xs sm:text-sm text-white flex items-center justify-center gap-2 hover:brightness-110 active:scale-[0.985] transition-all cursor-pointer">
+          <span>📤</span>
+          <span>사진첩 저장 / 공유하기</span>
+        </button>
+
+        <div class="grid grid-cols-2 gap-2">
+          <button id="btn-modal-direct-download" type="button"
+            class="py-2.5 px-3 rounded-2xl subtle-box subtle-box-interactive font-semibold text-xs flex items-center justify-center gap-1.5 active:scale-[0.985] transition-all cursor-pointer"
+            style="color: var(--text-primary);">
+            <span>⬇️</span>
+            <span>파일로 다운로드</span>
+          </button>
+
+          <button id="btn-modal-copy-text" type="button"
+            class="py-2.5 px-3 rounded-2xl subtle-box subtle-box-interactive font-semibold text-xs flex items-center justify-center gap-1.5 active:scale-[0.985] transition-all cursor-pointer"
+            style="color: var(--text-primary);">
+            <span>📋</span>
+            <span>결과 텍스트 복사</span>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ==================== CELEBRITY COMPARISON DRAWER / MODAL ==================== -->
@@ -1325,46 +1401,28 @@
       result: null,
       activeCelebTab: 'female',
       displayedCelebs: [],
-      cachedCardDataUrl: null
+      preparedCard: null,
+      preparedCardKey: null
     };
 
     const PRESET_PROFILES = {
-      jennie:   { nickname: '제니', gender: 'female', calType: 'solar', year: 1996, month: 1, day: 16, unknownTime: true },
-      wonyoung: { nickname: '장원영', gender: 'female', calType: 'solar', year: 2004, month: 8, day: 31, unknownTime: true },
-      eunwoo:   { nickname: '차은우', gender: 'male', calType: 'solar', year: 1997, month: 3, day: 30, unknownTime: true },
-      wooseok:  { nickname: '변우석', gender: 'male', calType: 'solar', year: 1991, month: 10, day: 31, unknownTime: true }
+      jennie:   { nickname: '제니',   gender: 'female', calType: 'solar', year: 1996, month: 1,  day: 16, unknownTime: true },
+      wonyoung: { nickname: '장원영', gender: 'female', calType: 'solar', year: 2004, month: 8,  day: 31, unknownTime: true },
+      eunwoo:   { nickname: '차은우', gender: 'male',   calType: 'solar', year: 1997, month: 3,  day: 30, unknownTime: true },
+      wooseok:  { nickname: '변우석', gender: 'male',   calType: 'solar', year: 1991, month: 10, day: 31, unknownTime: true }
     };
 
-    function showToast(message) {
-      const box = document.getElementById('toast-container');
-      const txt = document.getElementById('toast-text');
-      txt.textContent = message;
-      box.classList.remove('opacity-0', 'translate-y-3');
-      box.classList.add('opacity-100', 'translate-y-0');
-      clearTimeout(window._toastTimer);
-      window._toastTimer = setTimeout(() => {
-        box.classList.add('opacity-0', 'translate-y-3');
-        box.classList.remove('opacity-100', 'translate-y-0');
-      }, 2500);
-    }
+    function setTheme(theme) {
+      State.theme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      const iconEl = document.getElementById('theme-icon');
+      const labelEl = document.getElementById('theme-label');
+      if (iconEl) iconEl.textContent = theme === 'dark' ? '🌙' : '☀️';
+      if (labelEl) labelEl.textContent = theme === 'dark' ? '달빛 다크' : '한지 라이트';
 
-    function setTheme(themeName) {
-      State.theme = themeName;
-      document.documentElement.setAttribute('data-theme', themeName);
-      const icon = document.getElementById('theme-icon');
-      const label = document.getElementById('theme-label');
-      if (themeName === 'dark') {
-        icon.textContent = '🌙';
-        label.textContent = '달빛 다크';
-      } else {
-        icon.textContent = '📜';
-        label.textContent = '한지 라이트';
-      }
-      // Refresh cached PNG preview if visible so it matches the chosen editorial theme
-      if (State.result && !document.getElementById('inline-card-preview-box').classList.contains('hidden')) {
-        generateArchiveCardDataUrl().then(url => {
-          document.getElementById('inline-preview-image').src = url;
-        });
+      if (State.result) {
+        State.preparedCardKey = null;
+        prewarmArchiveCard();
       }
     }
 
@@ -1377,20 +1435,12 @@
       if (viewName === 'result') {
         inputView.classList.add('hidden');
         resultView.classList.remove('hidden');
-        resultView.classList.remove('animate-fade-up');
-        void resultView.offsetWidth;
-        resultView.classList.add('animate-fade-up');
-
         backBtn.classList.remove('hidden');
         backBtn.classList.add('inline-flex');
         brandGroup.classList.add('hidden');
       } else {
         resultView.classList.add('hidden');
         inputView.classList.remove('hidden');
-        inputView.classList.remove('animate-fade-up');
-        void inputView.offsetWidth;
-        inputView.classList.add('animate-fade-up');
-
         backBtn.classList.add('hidden');
         backBtn.classList.remove('inline-flex');
         brandGroup.classList.remove('hidden');
@@ -1400,23 +1450,45 @@
 
     function getCelestialOrbSVG(polarity, sizeClass = 'w-4 h-4') {
       if (polarity === 'yin') {
-        return `<svg class="${sizeClass} text-white drop-shadow-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+        return `
+          <svg viewBox="0 0 24 24" fill="currentColor" class="${sizeClass} text-white drop-shadow-sm" aria-hidden="true">
+            <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+          </svg>
+        `;
       }
-      return `<svg class="${sizeClass} text-white drop-shadow-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v2.2M12 19.8V22M4.93 4.93l1.5 1.5M17.57 17.57l1.5 1.5M2 12h2.2M19.8 12H22M4.93 19.07l1.5-1.5M17.57 6.43l1.5-1.5"/></svg>`;
+      return `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="${sizeClass} text-white drop-shadow-sm" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+      `;
     }
 
-    /**
-     * =========================================================================
-     * 6. RENDER EDITORIAL RESULT VIEW
-     * =========================================================================
-     */
+    let _toastTimer = null;
+    function showToast(message) {
+      const container = document.getElementById('toast-container');
+      const textEl = document.getElementById('toast-text');
+      if (!container || !textEl) return;
+
+      textEl.textContent = message;
+      container.classList.remove('opacity-0', 'translate-y-3');
+      container.classList.add('opacity-100', 'translate-y-0');
+
+      if (_toastTimer) clearTimeout(_toastTimer);
+      _toastTimer = setTimeout(() => {
+        container.classList.remove('opacity-100', 'translate-y-0');
+        container.classList.add('opacity-0', 'translate-y-3');
+      }, 2600);
+    }
+
     function renderEditorialResult(res) {
       State.result = res;
       State.activeCelebTab = res.gender;
-      State.cachedCardDataUrl = null;
+      State.preparedCardKey = null;
       document.getElementById('inline-card-preview-box').classList.add('hidden');
 
       switchView('result');
+      prewarmArchiveCard();
 
       const yin = res.yinCount;
       const yang = res.yangCount;
@@ -1718,15 +1790,46 @@
 
     /**
      * =========================================================================
-     * 7. HIGH-RESOLUTION 1080×1350 ARCHIVE PNG CARD GENERATOR & SHARE
+     * 7. PRE-RENDERED 1080×1350 ARCHIVE PNG CARD & MOBILE/DESKTOP SAVE FLOW
      * =========================================================================
      */
-    async function generateArchiveCardDataUrl() {
-      try {
-        if (document.fonts && document.fonts.ready) await document.fonts.ready;
-      } catch (e) {}
+    function getDeviceEnv() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera || '';
+      const isInApp = /KAKAOTALK|Instagram|NAVER|FBAN|FBAV|Line|DaumApps/i.test(ua);
+      const isIOS = /iPad|iPhone|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      const isAndroid = /Android/i.test(ua);
+      const isMobile = isIOS || isAndroid || /Mobile|webOS|BlackBerry|IEMobile|Opera Mini/i.test(ua) || (window.innerWidth <= 768 && navigator.maxTouchPoints > 0);
+      return { isMobile, isInApp, isIOS, isAndroid };
+    }
 
+    function dataUrlToBlob(dataUrl) {
+      const parts = dataUrl.split(',');
+      const mimeMatch = parts[0].match(/:(.*?);/);
+      const mime = mimeMatch ? mimeMatch[1] : 'image/png';
+      const binary = atob(parts[1]);
+      const len = binary.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binary.charCodeAt(i);
+      }
+      return new Blob([bytes], { type: mime });
+    }
+
+    function getArchiveCardCacheKey() {
       const res = State.result;
+      if (!res) return '';
+      return `${State.theme}|${res.nickname}|${res.gender}|${res.inputDateStr}|${res.unknownTime}|${res.yinCount}|${State.activeCelebTab}`;
+    }
+
+    function renderArchiveCardSync(forceRedraw = false) {
+      const res = State.result;
+      if (!res) return null;
+
+      const key = getArchiveCardCacheKey();
+      if (!forceRedraw && State.preparedCardKey === key && State.preparedCard) {
+        return State.preparedCard;
+      }
+
       const yin = res.yinCount;
       const yang = res.yangCount;
       const archetype = AURA_ARCHETYPES[yin] || AURA_ARCHETYPES[6];
@@ -1909,9 +2012,53 @@
       ctx.font = '600 21px Pretendard, sans-serif';
       ctx.fillText('당신의 음기는 몇 개?  |  새벽 달빛 & 현대 명리 아카이브', W / 2, 1262);
 
-      const url = canvas.toDataURL('image/png');
-      State.cachedCardDataUrl = url;
-      return url;
+      const safeName = (res.nickname || '당신').replace(/[\\/:*?"<>|]/g, '_');
+      const filename = `음기양기_사주카드_${safeName}_음기${yin}개.png`;
+      const dataUrl = canvas.toDataURL('image/png');
+      const blob = dataUrlToBlob(dataUrl);
+
+      if (State.preparedCard && State.preparedCard.blobUrl) {
+        try { URL.revokeObjectURL(State.preparedCard.blobUrl); } catch (e) {}
+      }
+      const blobUrl = URL.createObjectURL(blob);
+
+      let file = null;
+      try {
+        file = new File([blob], filename, { type: 'image/png' });
+      } catch (e) {}
+
+      State.preparedCard = { dataUrl, blob, blobUrl, file, filename };
+      State.preparedCardKey = key;
+
+      return State.preparedCard;
+    }
+
+    function prewarmArchiveCard() {
+      if (!State.result) return;
+      // Immediate synchronous pre-render so zero async work is ever needed on click
+      renderArchiveCardSync(true);
+
+      // Re-render once web fonts settle (with fast 600ms timeout fallback)
+      let settled = false;
+      const refreshRenderedCard = () => {
+        if (settled || !State.result) return;
+        settled = true;
+        const card = renderArchiveCardSync(true);
+        if (!card) return;
+        const inlineImg = document.getElementById('inline-preview-image');
+        if (inlineImg && !document.getElementById('inline-card-preview-box').classList.contains('hidden')) {
+          inlineImg.src = card.dataUrl;
+        }
+        const modalImg = document.getElementById('modal-card-image');
+        if (modalImg && !document.getElementById('export-card-modal').classList.contains('hidden')) {
+          modalImg.src = card.dataUrl;
+        }
+      };
+
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(refreshRenderedCard).catch(() => {});
+      }
+      setTimeout(refreshRenderedCard, 600);
     }
 
     function drawRoundRect(ctx, x, y, w, h, r) {
@@ -1926,23 +2073,24 @@
 
     function drawCanvasOrb(ctx, x, y, r, pol) {
       ctx.save();
-      ctx.translate(x, y);
-      const grad = ctx.createRadialGradient(-r * 0.3, -r * 0.3, 3, 0, 0, r);
+      const grad = ctx.createRadialGradient(x - r * 0.28, y - r * 0.28, r * 0.1, x, y, r);
       if (pol === 'yin') {
         grad.addColorStop(0, '#EEF2FF');
-        grad.addColorStop(0.55, '#93A5FD');
-        grad.addColorStop(1, '#4338CA');
-        ctx.shadowColor = 'rgba(147, 165, 253, 0.6)';
+        grad.addColorStop(0.46, '#93A5FD');
+        grad.addColorStop(0.84, '#6366F1');
+        grad.addColorStop(1, '#3730A3');
+        ctx.shadowColor = 'rgba(99, 102, 241, 0.45)';
       } else {
         grad.addColorStop(0, '#FEF9C3');
-        grad.addColorStop(0.55, '#FBBF24');
-        grad.addColorStop(1, '#B45309');
-        ctx.shadowColor = 'rgba(251, 191, 36, 0.55)';
+        grad.addColorStop(0.46, '#FBBF24');
+        grad.addColorStop(0.84, '#D97706');
+        grad.addColorStop(1, '#92400E');
+        ctx.shadowColor = 'rgba(217, 119, 6, 0.42)';
       }
       ctx.shadowBlur = 14;
-      ctx.beginPath();
-      ctx.arc(0, 0, r, 0, Math.PI * 2);
       ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.shadowBlur = 0;
@@ -1950,52 +2098,122 @@
       ctx.strokeStyle = '#FFFFFF';
       if (pol === 'yin') {
         ctx.beginPath();
-        ctx.arc(-1.5, 0, 11, 0.35 * Math.PI, 1.65 * Math.PI, false);
-        ctx.arc(4.8, -3, 9, 1.55 * Math.PI, 0.45 * Math.PI, true);
+        ctx.arc(x - 1, y, r * 0.42, 0.35 * Math.PI, 1.65 * Math.PI, false);
+        ctx.arc(x + r * 0.22, y - r * 0.08, r * 0.34, 1.55 * Math.PI, 0.45 * Math.PI, true);
         ctx.closePath();
         ctx.fill();
       } else {
         ctx.beginPath();
-        ctx.arc(0, 0, 6.5, 0, Math.PI * 2);
+        ctx.arc(x, y, r * 0.22, 0, Math.PI * 2);
         ctx.fill();
-        ctx.lineWidth = 2.3;
+        ctx.lineWidth = 2.2;
+        ctx.lineCap = 'round';
         for (let a = 0; a < 8; a++) {
-          const ang = (Math.PI * 2 * a) / 8;
+          const ang = (a * Math.PI) / 4;
           ctx.beginPath();
-          ctx.moveTo(Math.cos(ang) * 9.5, Math.sin(ang) * 9.5);
-          ctx.lineTo(Math.cos(ang) * 13.5, Math.sin(ang) * 13.5);
+          ctx.moveTo(x + Math.cos(ang) * r * 0.32, y + Math.sin(ang) * r * 0.32);
+          ctx.lineTo(x + Math.cos(ang) * r * 0.46, y + Math.sin(ang) * r * 0.46);
           ctx.stroke();
         }
       }
       ctx.restore();
     }
 
-    async function handleExportPng() {
-      const url = await generateArchiveCardDataUrl();
-      const res = State.result;
-      const a = document.createElement('a');
-      a.download = `${res.nickname}_사주음기_${res.yinCount}개.png`;
-      a.href = url;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-
-      // Also reveal inline preview so mobile users can long-press if desired
-      const previewBox = document.getElementById('inline-card-preview-box');
-      document.getElementById('inline-preview-image').src = url;
-      previewBox.classList.remove('hidden');
-
-      showToast('🖼️ 1080×1350 아카이브 결과 카드가 저장되었습니다');
+    function triggerFileDownloadSync(card) {
+      if (!card) return false;
+      try {
+        const a = document.createElement('a');
+        a.href = card.blobUrl || card.dataUrl;
+        a.download = card.filename;
+        a.rel = 'noopener';
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          if (a.parentNode) a.parentNode.removeChild(a);
+        }, 150);
+        return true;
+      } catch (e) {
+        return false;
+      }
     }
 
-    async function handleToggleCardPreview() {
+    function triggerNativeShareSync(card) {
+      if (!card || !State.result) return false;
+      if (navigator.canShare && card.file && navigator.canShare({ files: [card.file] })) {
+        try {
+          // Called synchronously inside tap handler before any await to preserve OS User Gesture
+          navigator.share({
+            files: [card.file],
+            title: '당신의 음기는 몇 개?'
+          }).catch(err => {
+            if (err && err.name !== 'AbortError') {
+              showToast('💡 위 카드를 1초간 꾹 눌러 사진에 저장해주세요');
+            }
+          });
+          return true;
+        } catch (e) {
+          return false;
+        }
+      }
+      return false;
+    }
+
+    function openMobileSaveModal(card, env) {
+      const guideEl = document.getElementById('modal-save-guide');
+      if (env.isInApp) {
+        guideEl.innerHTML = `<strong style="color: var(--yin-primary);">📱 인앱 브라우저 저장 안내:</strong> 위 카드 이미지를 <strong>1초간 꾹 눌러 '이미지 저장 / 사진에 저장'</strong>을 누르시면 사진첩에 바로 저장됩니다.`;
+      } else {
+        guideEl.innerHTML = `<strong style="color: var(--yin-primary);">📱 사진첩 저장 안내:</strong> 위 카드를 <strong>1초간 꾹 눌러 '사진에 저장'</strong>을 선택하거나, 아래 <strong>사진첩 저장 / 공유하기</strong> 버튼을 눌러주세요.`;
+      }
+
+      document.getElementById('modal-card-image').src = card.dataUrl;
+      document.getElementById('export-card-modal').classList.remove('hidden');
+    }
+
+    function handleSaveImage() {
+      if (!State.result) return;
+      const card = renderArchiveCardSync(false);
+      if (!card) return;
+
+      const env = getDeviceEnv();
+
+      if (!env.isMobile) {
+        // Desktop: Instant 1-click PNG file download
+        triggerFileDownloadSync(card);
+        showToast('🖼️ 1080×1350 결과 카드 이미지가 저장되었습니다');
+        return;
+      }
+
+      // Mobile (iOS Safari, Android Chrome, KakaoTalk/Instagram/Naver in-app browsers):
+      // 1) Immediately open mobile-optimized modal with real <img> supporting native long-press
+      openMobileSaveModal(card, env);
+
+      // 2) Simultaneously invoke synchronous navigator.share with pre-built File if supported
+      const shared = triggerNativeShareSync(card);
+      if (!shared) {
+        showToast('👆 위 카드를 1초간 꾹 눌러 사진첩에 저장하세요');
+      }
+    }
+
+    function handleModalWebShare() {
+      const card = renderArchiveCardSync(false);
+      if (!card) return;
+      const shared = triggerNativeShareSync(card);
+      if (!shared) {
+        showToast('💡 위 카드 이미지를 1초간 꾹 누르면 "사진에 저장" 메뉴가 나타납니다');
+      }
+    }
+
+    function handleToggleCardPreview() {
       const box = document.getElementById('inline-card-preview-box');
       if (!box.classList.contains('hidden')) {
         box.classList.add('hidden');
         return;
       }
-      const url = await generateArchiveCardDataUrl();
-      document.getElementById('inline-preview-image').src = url;
+      const card = renderArchiveCardSync(false);
+      if (!card) return;
+      document.getElementById('inline-preview-image').src = card.dataUrl;
       box.classList.remove('hidden');
       box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
@@ -2268,9 +2486,26 @@
           const g = btn.dataset.celebTab;
           State.activeCelebTab = g;
           updateCelebTabUI(g);
-          if (State.result) renderCelebrityGrid(State.result.yinCount, g);
+          if (State.result) {
+            renderCelebrityGrid(State.result.yinCount, g);
+            prewarmArchiveCard();
+          }
         });
       });
+
+      // Instant Image Save & Share Modal Controls
+      const exportModal = document.getElementById('export-card-modal');
+      document.getElementById('btn-close-export-modal').addEventListener('click', () => exportModal.classList.add('hidden'));
+      exportModal.addEventListener('click', e => {
+        if (e.target === exportModal) exportModal.classList.add('hidden');
+      });
+      document.getElementById('btn-modal-web-share').addEventListener('click', handleModalWebShare);
+      document.getElementById('btn-modal-direct-download').addEventListener('click', () => {
+        const card = renderArchiveCardSync(false);
+        triggerFileDownloadSync(card);
+        showToast('⬇️ 파일 다운로드를 요청했습니다 (미지원 시 위 이미지를 꾹 눌러 저장)');
+      });
+      document.getElementById('btn-modal-copy-text').addEventListener('click', handleCopyText);
 
       // Comparison Modal Close
       const cmpModal = document.getElementById('celeb-compare-modal');
@@ -2280,7 +2515,7 @@
       });
 
       // Bottom Export & Share Actions
-      document.getElementById('btn-export-png').addEventListener('click', handleExportPng);
+      document.getElementById('btn-export-png').addEventListener('click', handleSaveImage);
       document.getElementById('btn-toggle-card-preview').addEventListener('click', handleToggleCardPreview);
       document.getElementById('btn-close-inline-preview').addEventListener('click', () => {
         document.getElementById('inline-card-preview-box').classList.add('hidden');
